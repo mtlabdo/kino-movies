@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FR - kino-movies</string>
+    <string name="home">Accueil</string>
+    <string name="favorite">Favoris</string>
+    <string name="settings">Paramètres</string>
+</resources>
