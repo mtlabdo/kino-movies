@@ -82,6 +82,8 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
 
+    implementation(libs.coil.compose)
+
 
     val ktorVersion = "3.0.0"
     implementation("io.ktor:ktor-client-android:$ktorVersion")
