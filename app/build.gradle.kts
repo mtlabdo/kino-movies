@@ -2,9 +2,12 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("plugin.serialization") version "2.0.0"
+    kotlin("plugin.serialization") version libs.versions.kotlin
+    alias(libs.plugins.room)
+    alias(libs.plugins.ksp)
 
 }
+
 
 android {
     namespace = "com.kino.movies"
@@ -47,6 +50,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -66,6 +70,13 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
     implementation(libs.koin.androidXCompose)
+
+
+
+    implementation(libs.room.runtime)
+    //To use Coroutine features
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
 
     implementation(libs.kotlin.datetime)
 
@@ -87,4 +98,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }

@@ -1,5 +1,8 @@
 package com.kino.movies.di
 
+import com.kino.movies.data.local.dao.MovieDao
+import com.kino.movies.data.local.database.DatabaseBuilder
+import com.kino.movies.data.local.database.KinoAppDatabase
 import com.kino.movies.data.local.datasource.MovieLocalDataSource
 import com.kino.movies.data.network.datasource.MovieNetworkDataSource
 import com.kino.movies.data.network.ktor.KtorHttpClient
@@ -15,14 +18,21 @@ internal val ktorModules = module {
     single<HttpClient> { KtorHttpClient.build() }
 }
 
-internal val repositoryModules = module {
+internal val databaseModules = module {
+    single<KinoAppDatabase> {
+        DatabaseBuilder(get()).buildDatabase()
+    }
+    single<MovieDao> { get<KinoAppDatabase>().movieDao() }
+}
 
-    single { MovieLocalDataSource() }
-    single { MovieNetworkDataSource(get()) }
+internal val repositoryModules = module {
+    // Movie Repository
+    singleOf(::MovieLocalDataSource)
+    singleOf(::MovieNetworkDataSource)
     singleOf(::MovieRepository) bind IMovieRepository::class
 }
 
 
-val dataDI = ktorModules + repositoryModules
+val dataDI = ktorModules + repositoryModules + databaseModules
 
 

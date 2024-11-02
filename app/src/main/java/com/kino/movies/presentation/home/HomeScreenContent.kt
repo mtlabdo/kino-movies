@@ -12,16 +12,12 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun HomeScreenContent(
-    state: HomeState,
+    state: HomeViewState,
     onEvent: () -> Unit,
     toDetail: (String) -> Unit,
     context: Context,
     modifier: Modifier
 ) {
-
-    LaunchedEffect(key1 = Unit) {
-        onEvent()
-    }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(text = state.toString())

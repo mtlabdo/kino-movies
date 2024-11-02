@@ -13,6 +13,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import com.kino.movies.domain.Result
+import com.kino.movies.domain.doIfError
+import com.kino.movies.domain.doIfSuccess
 
 class MovieRepository(
     private val networkDataSource: MovieNetworkDataSource,
@@ -20,29 +23,26 @@ class MovieRepository(
 ) : IMovieRepository {
 
     override fun getMovies(query: String?) = flow<Result<List<Movie>>> {
-        val networkResult = networkDataSource.getMovies()
-        if (networkResult.isSuccess) {
-            val moviesNetwork = networkResult.getOrNull()
-            if (moviesNetwork != null) {
-                localDataSource.upsertMovies(moviesNetwork.map(MovieDto::toMovieEntity))
-            }
 
-        } else {
-            emit(
-                Result.failure(
-                    networkResult.exceptionOrNull()
-                        ?: Exception("Une erreur s'est produite lors de la récupération des films depuis le réseau")
-                )
-            )
+        val networkResult = networkDataSource.getMovies()
+        networkResult.doIfSuccess { moviesNetwork ->
+            localDataSource.upsertMovies(moviesNetwork.map(MovieDto::toMovieEntity))
+        }
+        networkResult.doIfError { error ->
+            emit(error)
         }
 
         emitAll(localDataSource.getAllMovies()
             .map { movieEntities ->
-                Result.success(movieEntities.map(MovieEntity::toMovie))
+                Result.Success(movieEntities.map(MovieEntity::toMovie))
             }
         )
     }.catch { e ->
-        emit(Result.failure(Exception("Une erreur s'est produite lors de la récupération des films: ${e.localizedMessage}")))
+        emit(
+            Result.Error(
+                message = e.message ?: "Une erreur inattendue s'est produite"
+            )
+        )
     }
 
 

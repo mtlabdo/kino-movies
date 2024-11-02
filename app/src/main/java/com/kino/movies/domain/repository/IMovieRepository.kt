@@ -2,6 +2,7 @@ package com.kino.movies.domain.repository
 
 import com.kino.movies.domain.model.Movie
 import kotlinx.coroutines.flow.Flow
+import com.kino.movies.domain.Result
 
 interface IMovieRepository {
 

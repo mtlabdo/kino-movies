@@ -27,13 +27,7 @@ fun KinoBottomBar(
     currentNavDestinationState: NavDestination?
 ) {
 
-    NavigationBar(
-        modifier = Modifier
-            .height(120.dp)
-            .windowInsetsPadding(
-                WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom + WindowInsetsSides.Horizontal)
-            )
-    ) {
+    NavigationBar {
         destinations.forEach { destination ->
             val selected =
                 currentNavDestinationState?.hierarchy?.any { it.route == destination.route } == true

@@ -21,8 +21,6 @@ object KtorHttpClient {
         return HttpClient {
             installContentNegotiation()
             installLogging()
-            expectSuccess = true
-            installResponseValidation()
             install(DefaultRequest) {
                 url(BASE_URL)
                 headers.append("x-rapidapi-host", API_HOST)
@@ -45,14 +43,6 @@ object KtorHttpClient {
         install(Logging) {
             logger = Logger.ANDROID
             level = LogLevel.INFO
-        }
-    }
-
-    private fun HttpClientConfig<*>.installResponseValidation() {
-        HttpResponseValidator {
-            handleResponseExceptionWithRequest { exception, request ->
-                println("HTTP error for ${request.url}: $exception")
-            }
         }
     }
 }

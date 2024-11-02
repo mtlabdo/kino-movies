@@ -1,6 +1,15 @@
 package com.kino.movies.data.local.entity
 
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
+
+@Entity(
+    tableName = "movie",
+    indices = [Index(value = ["title"])]
+)
 data class MovieEntity(
+    @PrimaryKey
     val id: String,
     val title: String,
     val description: String,
