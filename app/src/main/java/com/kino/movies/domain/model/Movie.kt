@@ -1,7 +1,7 @@
 package com.kino.movies.domain.model
 
 data class Movie(
-    val id: String? = null,
+    val id: String,
     val title: String? = null,
     val description: String? = null,
     val rank: Int? = null,
@@ -12,4 +12,5 @@ data class Movie(
     val year: String? = null,
     val releaseDate: String? = null,
     val note: String? = null,
+    val isFavorite: Boolean = false,
 )

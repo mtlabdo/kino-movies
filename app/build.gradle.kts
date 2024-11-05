@@ -83,6 +83,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     implementation(libs.coil.compose)
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.0-rc02")
 
 
     val ktorVersion = "3.0.0"

@@ -1,4 +1,4 @@
-package com.kino.movies
+package com.kino.movies.application
 
 import android.app.Application
 import com.kino.movies.di.appDI
@@ -9,14 +9,14 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
-class KinomoviesApp : Application() {
+class KinoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
         startKoin {
             androidLogger()
-            androidContext(this@KinomoviesApp)
+            androidContext(this@KinoApplication)
             modules(appDI + dataDI + domainDI + presentationDI)
         }
     }

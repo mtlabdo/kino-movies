@@ -26,6 +26,7 @@ fun MovieDto.toMovieEntity() = MovieEntity(
     thumbnailUrl = thumbnail,
     rating = rating,
     year = year.toString(),
+    favorite = false
 )
 
 fun MovieEntity.toMovie() = Movie(
@@ -37,5 +38,6 @@ fun MovieEntity.toMovie() = Movie(
     genre = genre,
     thumbnailUrl = thumbnailUrl,
     rating = rating,
-    year = year
+    year = year,
+    isFavorite = favorite
 )

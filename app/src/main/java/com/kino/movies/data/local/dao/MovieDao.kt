@@ -20,9 +20,17 @@ interface MovieDao {
     suspend fun deleteMovie(movie: MovieEntity)
 
     @Query("SELECT * FROM movie WHERE id = :id")
-    suspend fun getMovieById(id: String): MovieEntity?
+     fun getMovieById(id: String): Flow<MovieEntity?>
 
     @Query("DELETE FROM movie")
     suspend fun deleteAllMovies()
+
+    @Query("UPDATE movie SET favorite = 1 WHERE id = :movieId")
+    suspend fun setMovieFavorite(movieId: String)
+
+    @Query("UPDATE movie SET favorite = 0 WHERE id = :movieId")
+    suspend fun removeMovieFavorite(movieId: String)
+
+
 
 }

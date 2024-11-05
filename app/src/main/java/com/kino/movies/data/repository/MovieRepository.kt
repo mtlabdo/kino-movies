@@ -45,21 +45,31 @@ class MovieRepository(
         )
     }
 
-
-    override fun getMovie(id: String): Flow<Result<Movie>> {
-        TODO("Not yet implemented")
+    override fun getMovie(id: String) = flow<Result<Movie>> {
+        emitAll(localDataSource.getMovieById(id).map {
+            if (it != null) {
+                Result.Success(it.toMovie())
+            } else {
+                Result.Error(message = "Les infos sur le film demandé n'ont pas été trouvés")
+            }
+        })
+    }.catch { e ->
+        emit(
+            Result.Error(
+                message = e.message ?: "Une erreur inattendue s'est produite"
+            )
+        )
     }
 
-    override suspend fun addMovieFavorite(movie: Movie) {
-        TODO("Not yet implemented")
+    override suspend fun addMovieFavorite(movieId: String) {
+        localDataSource.addMovieFavorite(movieId)
     }
 
-    override suspend fun removeMovieFavorite(movie: Movie) {
-        TODO("Not yet implemented")
+    override suspend fun removeMovieFavorite(movieId: String) {
+        localDataSource.removeMovieFavorite(movieId)
     }
 
     override fun getFavoriteMovies(): Flow<Result<List<Movie>>> {
         TODO("Not yet implemented")
     }
-
 }

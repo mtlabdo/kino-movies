@@ -1,11 +1,10 @@
 package com.kino.movies.domain.usecase.movie
 
-import com.kino.movies.domain.model.Movie
 import com.kino.movies.domain.repository.IMovieRepository
 
-class AddMovieFavoriteUseCase(
+class AddFavoriteMovieUseCase(
     private val movieRepository: IMovieRepository
 
 ) {
-    suspend operator fun invoke(movie: Movie) = movieRepository.addMovieFavorite(movie)
+    suspend operator fun invoke(movieId: String) = movieRepository.addMovieFavorite(movieId)
 }

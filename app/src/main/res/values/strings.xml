@@ -3,4 +3,5 @@
     <string name="home">Accueil</string>
     <string name="favorite">Favoris</string>
     <string name="settings">Paramètres</string>
+    <string name="detail">Détail du film</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.kino.movies
 
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.kino.movies.presentation.designsystem.theme.KinomoviesTheme
-import com.kino.movies.presentation.navhost.KinomoviesNavHost
+import com.kino.movies.presentation.MainScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             KinomoviesTheme {
-                KinomoviesNavHost(navController)
+               MainScreen(navController)
             }
         }
     }

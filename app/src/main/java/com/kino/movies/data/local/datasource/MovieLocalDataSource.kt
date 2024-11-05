@@ -20,7 +20,7 @@ class MovieLocalDataSource(
             }
             Result.success(Unit)
         } catch (e: Exception) {
-            Result.failure(Exception("Failed to insert movie into local database: ${e.localizedMessage}"))
+            Result.failure(Exception("Erreur lors de l'ajout des films: ${e.localizedMessage}"))
         }
     }
 
@@ -29,17 +29,12 @@ class MovieLocalDataSource(
             movieDao.deleteMovie(movie)
             Result.success(Unit)
         } catch (e: Exception) {
-            Result.failure(Exception("Failed to delete movie from local database: ${e.localizedMessage}"))
+            Result.failure(Exception("Erreur lors de la suppression du film : ${e.localizedMessage}"))
         }
     }
 
-    suspend fun getMovieById(id: String): Result<MovieEntity?> {
-        return try {
-            val movie = movieDao.getMovieById(id)
-            Result.success(movie)
-        } catch (e: Exception) {
-            Result.failure(Exception("Failed to retrieve movie by ID from local database: ${e.localizedMessage}"))
-        }
+    fun getMovieById(id: String): Flow<MovieEntity?> {
+        return movieDao.getMovieById(id)
     }
 
     suspend fun deleteAllMovies(): Result<Unit> {
@@ -47,7 +42,25 @@ class MovieLocalDataSource(
             movieDao.deleteAllMovies()
             Result.success(Unit)
         } catch (e: Exception) {
-            Result.failure(Exception("Failed to delete all movies from local database: ${e.localizedMessage}"))
+            Result.failure(Exception("Erreur lors de la suppression des films: ${e.localizedMessage}"))
+        }
+    }
+
+    suspend fun addMovieFavorite(movieId: String) {
+        try {
+            movieDao.setMovieFavorite(movieId)
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(Exception("Erreur lors de l'ajout du film aux favoris: ${e.localizedMessage}"))
+        }
+    }
+
+    suspend fun removeMovieFavorite(movieId: String) {
+        try {
+            movieDao.removeMovieFavorite(movieId)
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(Exception("Erreur lors de la suppression du film des favoris: ${e.localizedMessage}"))
         }
     }
 }

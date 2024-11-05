@@ -19,10 +19,9 @@ interface IMovieRepository {
     /**
      * Add a movie to favorites.
      */
-    suspend fun addMovieFavorite(movie: Movie)
+    suspend fun addMovieFavorite(movieId: String)
 
-    suspend fun removeMovieFavorite(movie: Movie)
+    suspend fun removeMovieFavorite(movieId: String)
 
     fun getFavoriteMovies(): Flow<Result<List<Movie>>>
-
 }

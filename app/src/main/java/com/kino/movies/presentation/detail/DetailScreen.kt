@@ -1,43 +1,76 @@
 package com.kino.movies.presentation.detail
 
-import android.content.Context
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.unit.dp
+import com.kino.movies.R
+import com.kino.movies.presentation.designsystem.components.KinoTopBar
+import com.kino.movies.presentation.designsystem.components.KinoUiNotification
+import com.kino.movies.presentation.utils.UiNotification
 
 @Composable
 fun DetailScreen(
-    viewModel: DetailViewModel,
+    viewState: DetailViewState?,
+    notification: UiNotification?,
     onBack: () -> Unit,
+    onRefresh: () -> Unit = {},
+    onUpdateFavorite: (newFavoriteState) -> Unit,
+    modifier: Modifier = Modifier.padding(0.dp)
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    DetailScreenContent(
-        state = state,
-        onBack = onBack,
-        context = context
-    )
-}
+    var showNotificationDialog by remember { mutableStateOf(false) }
 
-@Composable
-fun DetailScreenContent(
-    state: DetailState,
-    onBack: () -> Unit,
-    context: Context
-
-) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = "Detail Screen")
-        Button(onClick = onBack) {
-            Text(text = "Go to Home")
-
+    LaunchedEffect(notification) {
+        if (notification != null) {
+            showNotificationDialog = true
         }
+    }
+    DetailScreenContent(
+        viewState = viewState,
+        onRefresh = onRefresh,
+        onUpdateFavorite = onUpdateFavorite,
+        modifier = modifier
+    )
+
+    Scaffold(
+        topBar = {
+            KinoTopBar(context.resources.getString(R.string.detail),
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null
+                        )
+                    }
+                }
+            )
+        },
+    ) { padding ->
+        DetailScreenContent(
+            viewState = viewState,
+            onRefresh = onRefresh,
+            onUpdateFavorite = onUpdateFavorite,
+            modifier = modifier.padding(padding)
+        )
+    }
+
+    if (showNotificationDialog) {
+        KinoUiNotification(
+            notification = notification!!,
+            onDismiss = {
+                showNotificationDialog = false
+            })
     }
 }

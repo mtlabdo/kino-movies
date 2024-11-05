@@ -1,6 +1,5 @@
 package com.kino.movies.presentation.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kino.movies.domain.Result
@@ -23,7 +22,7 @@ class HomeViewModel(
     private val _notification = MutableSharedFlow<UiNotification>()
     val notification = _notification.asSharedFlow()
 
-    private val _viewState = MutableStateFlow<HomeViewState>(HomeViewState.Loading)
+    private val _viewState = MutableStateFlow<HomeViewState?>(null)
     val viewState = _viewState.onStart {
         searchMovies()
     }.stateIn(
@@ -33,18 +32,17 @@ class HomeViewModel(
     )
 
     fun searchMovies(query: String? = null) {
-        Log.e("MovieNetworkDataSource", "searchMovies: $query")
         viewModelScope.launch(ioDispatcher) {
             getMoviesUseCase(query).collect { result ->
-                Log.e("MovieNetworkDataSource", "searchMovies res: $result")
                 when (result) {
                     is Result.Success -> {
                         _viewState.value = HomeViewState.MoviesReady(result.value)
                     }
 
                     is Result.Error -> {
+                        _viewState.value = null
                         val errorNotification = UiNotification.Error(
-                            title = "Oups, Erreur ${result.code}",
+                            title = "Oups! Erreur ${result.code}",
                             message = "${result.message}"
                         )
                         _notification.emit(errorNotification)

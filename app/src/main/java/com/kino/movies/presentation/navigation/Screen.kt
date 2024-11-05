@@ -1,4 +1,4 @@
-package com.kino.movies.presentation
+package com.kino.movies.presentation.navigation
 
 const val DETAIL_MOVIE_ARGUMENT_KEY = "movieId"
 

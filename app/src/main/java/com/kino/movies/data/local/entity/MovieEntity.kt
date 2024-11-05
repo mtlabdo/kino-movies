@@ -1,5 +1,6 @@
 package com.kino.movies.data.local.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
@@ -19,4 +20,6 @@ data class MovieEntity(
     val thumbnailUrl: String,
     val rating: String,
     val year: String,
+    @ColumnInfo(defaultValue = "0")
+    val favorite: Boolean,
 )
