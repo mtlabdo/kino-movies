@@ -101,12 +101,12 @@ fun MovieDetail(movieDetail: Movie, onUpdateFavorite: (newFavoriteState) -> Unit
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data("movieDetail.imageUrl")
+                .data(movieDetail.imageUrl)
+                .size(400)
                 .crossfade(true)
                 .build(),
-            // TODO set placeholder and error
-            placeholder = painterResource(R.drawable.ic_launcher_background),
-            error = painterResource(R.drawable.ic_launcher_background),
+            placeholder = painterResource(R.drawable.placeholder_movie),
+            error = painterResource(R.drawable.placeholder_movie),
             contentDescription = movieDetail.title,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -123,18 +123,20 @@ fun MovieDetail(movieDetail: Movie, onUpdateFavorite: (newFavoriteState) -> Unit
                 text = movieDetail.title ?: "- Titre inconnu -",
                 maxLines = 2,
                 style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.weight(5f)
             )
 
             Button(
                 onClick = {
                     isFavorite = !isFavorite
                     onUpdateFavorite(isFavorite) },
-                shape = CircleShape,
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.size(48.dp).weight(1f),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 4.dp
                 ),
-                contentPadding = PaddingValues(1.dp)
+                shape = CircleShape,
+                contentPadding = PaddingValues(1.dp),
+
             ) {
                 Icon(
                     imageVector = if (isFavorite) {

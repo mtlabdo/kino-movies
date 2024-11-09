@@ -15,7 +15,7 @@ data class MovieEntity(
     val title: String,
     val description: String,
     val rank: Int,
-    val imageUrl: String,
+    val imageUrl: String? = null,
     val genre: String,
     val thumbnailUrl: String,
     val rating: String,

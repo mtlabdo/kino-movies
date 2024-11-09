@@ -36,6 +36,6 @@ val bottomBarDestinations =
     )
 
 
-val routesWithBottomBar: Set<String> = bottomBarDestinations.map {
-    Log.d("DebugRecomposition", "SET RECAL")
-    it.route }.toSet()
+val bottomBarSetRoutes: Set<String> = bottomBarDestinations.map {
+    it.route
+}.toSet()

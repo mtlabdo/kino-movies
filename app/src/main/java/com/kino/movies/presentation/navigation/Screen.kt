@@ -1,5 +1,6 @@
 package com.kino.movies.presentation.navigation
 
+
 const val DETAIL_MOVIE_ARGUMENT_KEY = "movieId"
 
 private const val HOME_ROUTE = "home_screen"
@@ -12,9 +13,11 @@ sealed class Screen(val route: String) {
     object Home : Screen(HOME_ROUTE)
     object Detail : Screen(DETAIL_ROUTE) {
         fun withMovieId(movieId: String): String {
-            return  DETAIL_ROUTE.replace("{$DETAIL_MOVIE_ARGUMENT_KEY}", movieId)
+            return DETAIL_ROUTE.replace("{$DETAIL_MOVIE_ARGUMENT_KEY}", movieId)
         }
     }
+
     object Favorite : Screen(FAVORITE_ROUTE)
     object Settings : Screen(SETTINGS_ROUTE)
+
 }

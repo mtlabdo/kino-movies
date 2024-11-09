@@ -6,6 +6,7 @@ import com.kino.movies.data.mapper.toMovie
 import com.kino.movies.data.mapper.toMovieEntity
 import com.kino.movies.data.network.datasource.MovieNetworkDataSource
 import com.kino.movies.data.network.dto.MovieDto
+import com.kino.movies.data.network.dto._MovieDto
 import com.kino.movies.domain.model.Movie
 import com.kino.movies.domain.repository.IMovieRepository
 import kotlinx.coroutines.flow.Flow
@@ -26,7 +27,7 @@ class MovieRepository(
 
         val networkResult = networkDataSource.getMovies()
         networkResult.doIfSuccess { moviesNetwork ->
-            localDataSource.upsertMovies(moviesNetwork.map(MovieDto::toMovieEntity))
+            localDataSource.upsertMovies(moviesNetwork.map(_MovieDto::toMovieEntity))
         }
         networkResult.doIfError { error ->
             emit(error)

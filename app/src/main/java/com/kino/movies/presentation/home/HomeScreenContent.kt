@@ -1,5 +1,6 @@
 package com.kino.movies.presentation.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -113,14 +114,19 @@ fun MovieItem(movie: Movie, onItemClick: (String) -> Unit) {
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(movie.thumbnailUrl)
-                .crossfade(true)
+                .data(movie.imageUrl)
+                .size(92)
+                .diskCacheKey(movie.imageUrl)
+                .crossfade(false)
                 .build(),
             // TODO : set placeholder & error
-            placeholder = painterResource(R.drawable.ic_launcher_background),
-            error = painterResource(R.drawable.ic_launcher_background),
+            placeholder = painterResource(R.drawable.placeholder_movie),
+            error = painterResource(R.drawable.placeholder_movie),
             contentDescription = movie.title,
             contentScale = ContentScale.Crop,
+            onError = {
+                Log.e("MovieItem", "Error loading image", it.result.throwable)
+            },
             modifier = Modifier
                 .clip(MaterialTheme.shapes.medium)
                 .size(92.dp),
