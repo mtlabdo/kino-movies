@@ -48,7 +48,7 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.kino.movies.R
 import com.kino.movies.domain.model.Movie
-import com.kino.movies.presentation.designsystem.components.KinoUiLoading
+import com.kino.movies.presentation.designsystem.component.KinoUiLoading
 
 @Composable
 fun DetailScreenContent(

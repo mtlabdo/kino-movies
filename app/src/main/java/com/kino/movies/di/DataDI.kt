@@ -7,7 +7,9 @@ import com.kino.movies.data.local.datasource.MovieLocalDataSource
 import com.kino.movies.data.network.datasource.MovieNetworkDataSource
 import com.kino.movies.data.network.ktor.KtorHttpClient
 import com.kino.movies.data.repository.MovieRepository
+import com.kino.movies.data.repository.UserPreferencesRepository
 import com.kino.movies.domain.repository.IMovieRepository
+import com.kino.movies.domain.repository.IUserPreferencesRepository
 import io.ktor.client.HttpClient
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -30,6 +32,7 @@ internal val repositoryModules = module {
     singleOf(::MovieLocalDataSource)
     singleOf(::MovieNetworkDataSource)
     singleOf(::MovieRepository) bind IMovieRepository::class
+    singleOf(::UserPreferencesRepository) bind IUserPreferencesRepository::class
 }
 
 

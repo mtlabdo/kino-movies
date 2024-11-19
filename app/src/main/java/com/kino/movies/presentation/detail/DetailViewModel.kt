@@ -5,14 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.kino.movies.domain.usecase.movie.GetMovieDetailUseCase
 import com.kino.movies.presentation.utils.UiNotification
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import com.kino.movies.domain.Result
 import com.kino.movies.domain.usecase.movie.AddFavoriteMovieUseCase
 import com.kino.movies.domain.usecase.movie.DeleteFavoriteMovieUseCase
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 
 class DetailViewModel(
     private val getMovieDetailUseCase: GetMovieDetailUseCase,
@@ -20,8 +20,9 @@ class DetailViewModel(
     private val deleteFavoriteMovieUseCase: DeleteFavoriteMovieUseCase,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    private val _notification = MutableSharedFlow<UiNotification>()
-    val notification = _notification.asSharedFlow()
+
+    private val _notification = Channel<UiNotification>()
+    val notification = _notification.receiveAsFlow()
 
     private val _viewState = MutableStateFlow<DetailViewState?>(null)
     val viewState = _viewState.asStateFlow()
@@ -41,7 +42,7 @@ class DetailViewModel(
                             title = "Oups!",
                             message = "${result.message}"
                         )
-                        _notification.emit(errorNotification)
+                        _notification.send(errorNotification)
                     }
                 }
             }

@@ -1,4 +1,4 @@
-package com.kino.movies.presentation.designsystem.components
+package com.kino.movies.presentation.designsystem.component
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme

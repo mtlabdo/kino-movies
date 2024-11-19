@@ -13,6 +13,10 @@ class MovieLocalDataSource(
         return movieDao.getAllMovies()
     }
 
+    fun getFavoriteMovies(): Flow<List<MovieEntity>> {
+        return movieDao.getFavoriteMovies()
+    }
+
     suspend fun upsertMovies(movies: List<MovieEntity>): Result<Unit> {
         return try {
             movies.forEach { movie ->

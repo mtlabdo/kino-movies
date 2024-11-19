@@ -17,8 +17,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.kino.movies.R
 import com.kino.movies.presentation.KinoAnimateVisibility
-import com.kino.movies.presentation.designsystem.components.KinoTopBar
-import com.kino.movies.presentation.designsystem.components.KinoUiNotification
+import com.kino.movies.presentation.designsystem.component.KinoTopBar
+import com.kino.movies.presentation.designsystem.component.KinoUiNotification
 import com.kino.movies.presentation.utils.UiNotification
 
 @Composable

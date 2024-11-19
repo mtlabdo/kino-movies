@@ -5,7 +5,6 @@ import com.kino.movies.data.local.entity.MovieEntity
 import com.kino.movies.data.mapper.toMovie
 import com.kino.movies.data.mapper.toMovieEntity
 import com.kino.movies.data.network.datasource.MovieNetworkDataSource
-import com.kino.movies.data.network.dto.MovieDto
 import com.kino.movies.data.network.dto._MovieDto
 import com.kino.movies.domain.model.Movie
 import com.kino.movies.domain.repository.IMovieRepository
@@ -70,7 +69,11 @@ class MovieRepository(
         localDataSource.removeMovieFavorite(movieId)
     }
 
-    override fun getFavoriteMovies(): Flow<Result<List<Movie>>> {
-        TODO("Not yet implemented")
+    override fun getFavoriteMovies(): Flow<Result<List<Movie>>> = flow {
+        emitAll(localDataSource.getFavoriteMovies()
+            .map { movieEntities ->
+                Result.Success(movieEntities.map(MovieEntity::toMovie))
+            }
+        )
     }
 }

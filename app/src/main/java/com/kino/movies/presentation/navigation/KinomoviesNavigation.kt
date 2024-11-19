@@ -22,6 +22,7 @@ import com.kino.movies.presentation.favorite.FavoriteViewModel
 import com.kino.movies.presentation.home.HomeScreen
 import com.kino.movies.presentation.home.HomeViewModel
 import com.kino.movies.presentation.setting.SettingScreen
+import com.kino.movies.presentation.setting.SettingViewModel
 import com.kino.movies.presentation.utils.UiNotification
 import org.koin.androidx.compose.koinViewModel
 
@@ -64,8 +65,7 @@ fun NavGraphBuilder.homeNode(
             viewState,
             uiNotification,
             onRefresh = viewModel::searchMovies,
-            navToDetail = {
-                movieId -> navController.navigate(Screen.Detail.withMovieId(movieId)) },
+            navToDetail = { movieId -> navController.navigate(Screen.Detail.withMovieId(movieId)) },
             modifier = modifier
         )
     }
@@ -74,17 +74,27 @@ fun NavGraphBuilder.homeNode(
 fun NavGraphBuilder.favoriteNode(
     navController: NavHostController,
     modifier: Modifier
-){
+) {
     composable(
         Screen.Favorite.route,
     ) {
         val viewModel = koinViewModel<FavoriteViewModel>()
         val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+        var uiNotification by remember {
+            mutableStateOf<UiNotification?>(null)
+        }
+        LaunchedEffect(Unit) {
+            viewModel.notification.collect { notification ->
+                Log.d("FavoriteViewModel", "Notification 1 received: $notification")
+                uiNotification = notification
+            }
+        }
 
         FavoriteScreen(
             favoriteViewState = viewState,
-            notification = null,
+            notification = uiNotification,
             onRefresh = viewModel::getFavoriteMovies,
+            navToDetail = { movieId -> navController.navigate(Screen.Detail.withMovieId(movieId)) },
             modifier = modifier
         )
     }
@@ -94,13 +104,26 @@ fun NavGraphBuilder.favoriteNode(
 fun NavGraphBuilder.settingNode(
     navController: NavHostController,
     modifier: Modifier
-){
+) {
     composable(
         Screen.Settings.route,
     ) {
-
+        val viewModel = koinViewModel<SettingViewModel>()
+        val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+        var uiNotification by remember {
+            mutableStateOf<UiNotification?>(null)
+        }
+        LaunchedEffect(Unit) {
+            viewModel.notification.collect { notification ->
+                Log.d("FavoriteViewModel", "Notification 1 received: $notification")
+                uiNotification = notification
+            }
+        }
         SettingScreen(
-
+            settingViewState = viewState,
+            notification = uiNotification,
+            modifier = modifier,
+            onEvent = viewModel::onEvent
         )
     }
 

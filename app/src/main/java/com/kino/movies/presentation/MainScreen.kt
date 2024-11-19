@@ -16,14 +16,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.kino.movies.presentation.designsystem.components.KinoBottomBar
-import com.kino.movies.presentation.designsystem.components.KinoTopBar
+import com.kino.movies.presentation.designsystem.component.KinoBottomBar
+import com.kino.movies.presentation.designsystem.component.KinoTopBar
 import com.kino.movies.presentation.navigation.KinomoviesNavHost
 import com.kino.movies.presentation.utils.bottomBarDestinations
 import com.kino.movies.presentation.utils.bottomBarSetRoutes
 
 const val NO_RESOURCE = 0
-
 @Composable
 fun MainScreen(
     navController: NavHostController = rememberNavController(),
@@ -63,7 +62,6 @@ fun MainScreen(
                 )
             }
         },
-
         ) { padding ->
         KinomoviesNavHost(navController, modifier = Modifier.padding(padding))
     }

@@ -32,7 +32,7 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.kino.movies.R
 import com.kino.movies.domain.model.Movie
-import com.kino.movies.presentation.designsystem.components.KinoUiLoading
+import com.kino.movies.presentation.designsystem.component.KinoUiLoading
 
 @Composable
 fun HomeScreenContent(
@@ -41,10 +41,7 @@ fun HomeScreenContent(
     toDetail: (movieId) -> Unit,
     modifier: Modifier
 ) {
-
-    Column(
-        modifier = modifier.fillMaxSize(),
-    ) {
+    Column(modifier = modifier.fillMaxSize()) {
 
         when (viewState) {
             is HomeViewState.Loading -> {
@@ -56,6 +53,7 @@ fun HomeScreenContent(
             }
 
             else -> {
+                // TODO MAKE COMPONENT (EMPTY CONTENT)
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -77,12 +75,9 @@ fun HomeScreenContent(
 fun MoviesList(movies: List<Movie>, onItemClick: (movieId) -> Unit) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-
-        itemsIndexed(items = movies, key = { _, item ->
-            item.id
-        }) { index, item ->
+        itemsIndexed(items = movies, key = { _, item -> item.id }) { index, item ->
             val backgroundColor = if (index % 2 == 0) {
                 MaterialTheme.colorScheme.background
             } else {
@@ -97,7 +92,6 @@ fun MoviesList(movies: List<Movie>, onItemClick: (movieId) -> Unit) {
                 MovieItem(item, onItemClick = onItemClick)
             }
         }
-
     }
 }
 

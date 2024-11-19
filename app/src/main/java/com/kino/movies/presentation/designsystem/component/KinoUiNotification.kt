@@ -1,4 +1,4 @@
-package com.kino.movies.presentation.designsystem.components
+package com.kino.movies.presentation.designsystem.component
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AlertDialog
