@@ -4,15 +4,9 @@ sealed class SettingViewState {
 
     object Loading : SettingViewState()
 
-    data class SettingItems(
-        val settings: List<SettingUiItem>
+    data class Setting(
+        val theme: SettingUiItem,
+        val language: SettingUiItem,
     ) : SettingViewState()
 }
 
-data class SettingUiItem(
-    val id: String,
-    val icon: Int,
-    val settingName: String,
-    val isSwitchUi: Boolean = false,
-    val subTitle: String = "",
-)

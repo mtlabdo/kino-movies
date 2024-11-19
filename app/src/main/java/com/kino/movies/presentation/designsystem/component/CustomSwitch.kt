@@ -46,15 +46,13 @@ fun CustomSwitch(
     borderWidth: Dp = 2.dp,
     cornerSize: Int = 50,
     iconInnerPadding: Dp = 4.dp,
-    thumbSize: Dp = 20.dp
+    thumbSize: Dp = 20.dp,
+    switchOn: Boolean,
+    onSwitch: ((Boolean) -> Unit)? = null
 ) {
 
     val interactionSource = remember {
         MutableInteractionSource()
-    }
-
-    var switchOn by remember {
-        mutableStateOf(true)
     }
 
     val alignment by animateAlignmentAsState(if (switchOn) 1f else -1f)
@@ -84,7 +82,7 @@ fun CustomSwitch(
                 indication = null,
                 interactionSource = interactionSource
             ) {
-                switchOn = !switchOn
+                onSwitch?.invoke(!switchOn)
             },
         contentAlignment = Alignment.Center
     ) {

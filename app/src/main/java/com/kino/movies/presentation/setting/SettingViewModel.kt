@@ -1,5 +1,6 @@
 package com.kino.movies.presentation.setting
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kino.movies.domain.model.AppLanguage
@@ -13,6 +14,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -28,23 +31,38 @@ class SettingViewModel(
 
     private val _viewState = MutableStateFlow<SettingViewState?>(null)
     val viewState = _viewState.onStart {
-        presentSettings()
+        getUserPreferences()
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Lazily,
         initialValue = SettingViewState.Loading
     )
 
+
     private val _notification = Channel<UiNotification>()
     val notification = _notification.receiveAsFlow()
 
-    private fun presentSettings() {
-        _viewState.value = SettingViewState.SettingItems(
-            settings = listOf(
-                darkModeSetting,
-                languageSetting,
-            )
-        )
+    private fun getUserPreferences() {
+        viewModelScope.launch(ioDispatcher) {
+            combine<AppTheme, AppLanguage, Pair<AppTheme, AppLanguage>>(
+                getAppThemeUseCase.invoke(),
+                getAppLanguageUseCase.invoke()
+            ) { theme, language ->
+                Pair(theme, language)
+            }.catch {
+                _notification.send(UiNotification.Error(it.message.toString()))
+            }.collect {
+                Log.d("SettingViewModel", "User preferences received: $it")
+                val theme = darkModeSetting.apply {
+                    isSwitchChecked = it.first == AppTheme.DARK_THEME
+                }
+                val languageSetting = languageSetting.apply {
+                    subTitle =
+                        languages.find { lang -> lang.first == it.second }?.second ?: "Default"
+                }
+                _viewState.value = SettingViewState.Setting(theme, languageSetting)
+            }
+        }
     }
 
     fun onEvent(event: SettingEvent) {

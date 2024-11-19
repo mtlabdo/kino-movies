@@ -16,3 +16,12 @@ val languageSetting = SettingUiItem(
     subTitle = languages[0].second,
     settingName = "Langue",
 )
+
+data class SettingUiItem(
+    val id: String? = null,
+    val icon: Int,
+    val settingName: String,
+    var subTitle: String = "",
+    val isSwitchUi: Boolean = false,
+    var isSwitchChecked: Boolean = false
+)

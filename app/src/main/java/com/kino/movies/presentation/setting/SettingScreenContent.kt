@@ -1,5 +1,6 @@
 package com.kino.movies.presentation.setting
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,10 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.*
@@ -40,8 +45,8 @@ fun SettingScreenContent(
                 KinoUiLoading()
             }
 
-            is SettingViewState.SettingItems -> {
-                SettingList(viewState.settings, onEvent)
+            is SettingViewState.Setting -> {
+                SettingList(viewState, onEvent)
             }
 
             else -> Unit
@@ -52,39 +57,66 @@ fun SettingScreenContent(
 
 @Composable
 fun SettingList(
-    settingItems: List<SettingUiItem>,
+    viewState: SettingViewState.Setting,
     onEvent: (SettingEvent) -> Unit
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        items(
-            settingItems,
-        ) {
-            SettingItem(it, onEvent)
+    themeSetting(viewState.theme, onEvent)
+    LanguageSetting(viewState.language, onEvent)
+}
+
+@Composable
+fun themeSetting(
+    item: SettingUiItem,
+    onEvent: (SettingEvent) -> Unit
+) {
+    SettingItem(
+        icon = item.icon,
+        title = item.settingName,
+        subTitle = item.subTitle,
+        isSwitchUi = item.isSwitchUi,
+        isSwitchUiChecked = item.isSwitchChecked,
+        onSwitch = { switchedOn ->
+            if (switchedOn) {
+                onEvent(SettingEvent.OnChangeTheme(AppTheme.DARK_THEME))
+            } else
+                onEvent(SettingEvent.OnChangeTheme(AppTheme.LIGHT_THEME))
+        },
+    )
+}
+
+@Composable
+fun LanguageSetting(
+    item: SettingUiItem,
+    onEvent: (SettingEvent) -> Unit
+) {
+    SettingItem(
+        icon = item.icon,
+        title = item.settingName,
+        subTitle = item.subTitle,
+        onBoxClicked = {
+            // TODO OPEN LANG CHOICE DIALOG
+            val random = (0..6).random()
+            onEvent(SettingEvent.OnChangeLanguage(AppLanguage.entries[random]))
         }
-    }
+    )
 }
 
 
 @Composable
 fun SettingItem(
-    item: SettingUiItem,
-    onEvent: (SettingEvent) -> Unit
+    @DrawableRes icon: Int,
+    title: String,
+    subTitle: String = "",
+    isSwitchUi: Boolean = false,
+    isSwitchUiChecked: Boolean = false,
+    onSwitch: ((Boolean) -> Unit)? = null,
+    onBoxClicked: (() -> Unit) = {}
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                when (item.id) {
-                    "dark_mode" -> {
-                        onEvent(SettingEvent.OnChangeTheme(AppTheme.LIGHT_THEME))
-                    }
-                    "language" -> onEvent(SettingEvent.OnChangeLanguage(AppLanguage.FRENCH))
-                }
+                onBoxClicked()
             },
         shape = RoundedCornerShape(16.dp), elevation = CardDefaults.cardElevation(
             defaultElevation = 0.dp
@@ -104,7 +136,7 @@ fun SettingItem(
                 contentAlignment = Alignment.CenterStart
             ) {
                 Image(
-                    painter = painterResource(id = item.icon),
+                    painter = painterResource(id = icon),
                     contentDescription = null,
                     modifier = Modifier
                         .clip(shape = CircleShape)
@@ -116,7 +148,7 @@ fun SettingItem(
                 contentAlignment = Alignment.CenterStart, modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = item.settingName,
+                    text = title,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(horizontal = 10.dp)
@@ -124,14 +156,22 @@ fun SettingItem(
 
             }
             Text(
-                text = item.subTitle,
+                text = subTitle,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(horizontal = 10.dp),
                 color = Color.LightGray
             )
-            if (item.isSwitchUi) {
-                CustomSwitch()
+            if (isSwitchUi) {
+                var switchOn by remember {
+                    mutableStateOf(isSwitchUiChecked)
+                }
+                CustomSwitch(
+                    switchOn = switchOn,
+                    onSwitch = { switched ->
+                        switchOn = switched
+                        onSwitch?.invoke(switched)
+                    })
             } else DefaultBox(iconSize = 25)
         }
     }
