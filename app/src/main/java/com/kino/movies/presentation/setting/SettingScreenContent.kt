@@ -6,8 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -21,14 +19,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.*
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
-import com.kino.movies.domain.model.AppLanguage
 import com.kino.movies.domain.model.AppTheme
 import com.kino.movies.presentation.designsystem.component.CustomSwitch
 import com.kino.movies.presentation.designsystem.component.KinoUiLoading
+import com.kino.movies.presentation.designsystem.composable.SpacerVertical16
 
 @Composable
 fun SettingScreenContent(
@@ -38,7 +34,7 @@ fun SettingScreenContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
+            .padding(all = 16.dp)
     ) {
         when (viewState) {
             is SettingViewState.Loading -> {
@@ -61,20 +57,20 @@ fun SettingList(
     onEvent: (SettingEvent) -> Unit
 ) {
     themeSetting(viewState.theme, onEvent)
+    SpacerVertical16()
     LanguageSetting(viewState.language, onEvent)
 }
 
 @Composable
 fun themeSetting(
-    item: SettingUiItem,
+    themeState: ThemeSetting,
     onEvent: (SettingEvent) -> Unit
 ) {
     SettingItem(
-        icon = item.icon,
-        title = item.settingName,
-        subTitle = item.subTitle,
-        isSwitchUi = item.isSwitchUi,
-        isSwitchUiChecked = item.isSwitchChecked,
+        icon = themeState.settingUiItem.icon,
+        title = themeState.settingUiItem.settingName,
+        isSwitchUi = themeState.settingUiItem.isSwitchUi,
+        isSwitchUiChecked = themeState.isDarkTheme,
         onSwitch = { switchedOn ->
             if (switchedOn) {
                 onEvent(SettingEvent.OnChangeTheme(AppTheme.DARK_THEME))
@@ -86,18 +82,31 @@ fun themeSetting(
 
 @Composable
 fun LanguageSetting(
-    item: SettingUiItem,
+    languageState: LanguageSetting,
     onEvent: (SettingEvent) -> Unit
 ) {
+    var isDialogOpen by remember { mutableStateOf(false) }
+    if (isDialogOpen) {
+        LanguagePickerDialog(
+            languages = languageState.languages,
+            selectedLanguage = languageState.selectedLanguage,
+            onLanguageSelected = { selectedLanguage ->
+                onEvent(
+                    SettingEvent.OnChangeLanguage(selectedLanguage)
+                )
+                isDialogOpen = false
+            },
+            onDismiss = { isDialogOpen = false }
+        )
+    }
     SettingItem(
-        icon = item.icon,
-        title = item.settingName,
-        subTitle = item.subTitle,
+        icon = languageState.settingUiItem.icon,
+        title = languageState.settingUiItem.settingName,
+        subTitle = languageState.settingUiItem.subTitle,
         onBoxClicked = {
-            // TODO OPEN LANG CHOICE DIALOG
-            val random = (0..6).random()
-            onEvent(SettingEvent.OnChangeLanguage(AppLanguage.entries[random]))
+            isDialogOpen = true
         }
+
     )
 }
 
@@ -149,27 +158,23 @@ fun SettingItem(
             ) {
                 Text(
                     text = title,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = MaterialTheme.typography.bodyLarge.fontWeight,
+                    fontSize = MaterialTheme.typography.bodyLarge.fontSize,
                     modifier = Modifier.padding(horizontal = 10.dp)
                 )
 
             }
             Text(
                 text = subTitle,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
+                fontWeight = MaterialTheme.typography.bodyLarge.fontWeight,
+                fontSize = MaterialTheme.typography.bodyLarge.fontSize,
                 modifier = Modifier.padding(horizontal = 10.dp),
-                color = Color.LightGray
+                color = MaterialTheme.colorScheme.outline
             )
             if (isSwitchUi) {
-                var switchOn by remember {
-                    mutableStateOf(isSwitchUiChecked)
-                }
                 CustomSwitch(
-                    switchOn = switchOn,
+                    switchOn = isSwitchUiChecked,
                     onSwitch = { switched ->
-                        switchOn = switched
                         onSwitch?.invoke(switched)
                     })
             } else DefaultBox(iconSize = 25)

@@ -13,7 +13,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.kino.movies.presentation.utils.BottomBarDestination
 
-
 @Composable
 fun KinoBottomBar(
     destinations: List<BottomBarDestination>,

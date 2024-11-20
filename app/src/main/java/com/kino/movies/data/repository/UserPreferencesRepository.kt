@@ -14,11 +14,10 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
 class UserPreferencesRepository(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
 ) : IUserPreferencesRepository {
     override fun getTheme(): Flow<AppTheme> = dataStore.data.catch { exception ->
         when (exception) {
-            // dataStore.data throws an IOException when an error is encountered when reading data
             is IOException -> emit(emptyPreferences())
             else -> throw exception
         }
@@ -35,7 +34,6 @@ class UserPreferencesRepository(
 
     override fun getLanguage(): Flow<AppLanguage> = dataStore.data.catch { exception ->
         when (exception) {
-            // dataStore.data throws an IOException when an error is encountered when reading data
             is IOException -> emit(emptyPreferences())
             else -> throw exception
         }

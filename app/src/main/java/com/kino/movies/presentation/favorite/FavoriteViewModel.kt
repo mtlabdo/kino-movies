@@ -11,16 +11,12 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import com.kino.movies.domain.Result
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
+import com.kino.movies.presentation.utils.UiNotificationController
 
 class FavoriteViewModel(
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
-
-    private val _notification = Channel<UiNotification>()
-    val notification = _notification.receiveAsFlow()
 
     private val _viewState = MutableStateFlow<FavoriteViewState?>(null)
     val viewState = _viewState.onStart {
@@ -42,11 +38,12 @@ class FavoriteViewModel(
 
                     is Result.Error -> {
                         _viewState.value = null
-                        val errorNotification = UiNotification.Error(
-                            title = "Oups!",
-                            message = "Erreur lors de la récupération des films favoris, veuillez réessayer !"
+                        val errorNotification = UiNotification.SnackBarNotificationEvent(
+                            message = "Erreur lors de la récupération des films favoris !",
+                            actionLabel = "Réessayer",
+                            action = { getFavoriteMovies() }
                         )
-                        _notification.send(errorNotification)
+                        UiNotificationController.sendUiNotification(errorNotification)
                     }
                 }
             }

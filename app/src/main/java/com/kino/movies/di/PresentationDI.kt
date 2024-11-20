@@ -19,7 +19,7 @@ internal val viewModelModules = module {
         FavoriteViewModel(get(), get(named("IODispatcher")))
     }
     viewModel {
-        SettingViewModel(get(), get(), get(), get(), get(named("IODispatcher")))
+        SettingViewModel(get(), get(), get(), get(), get(named("IODispatcher")), get())
     }
 }
 

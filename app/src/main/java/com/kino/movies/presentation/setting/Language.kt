@@ -2,7 +2,7 @@ package com.kino.movies.presentation.setting
 
 import com.kino.movies.domain.model.AppLanguage
 
-val languages = listOf(
+val languagesList = listOf(
     AppLanguage.FOLLOW_SYSTEM to "Default",
     AppLanguage.FRENCH to "Français",
     AppLanguage.ENGLISH to "English",

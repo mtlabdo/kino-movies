@@ -5,11 +5,15 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -18,11 +22,18 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kino.movies.presentation.designsystem.component.KinoBottomBar
 import com.kino.movies.presentation.designsystem.component.KinoTopBar
-import com.kino.movies.presentation.navigation.KinomoviesNavHost
+import com.kino.movies.presentation.designsystem.component.alertDialog.AlertDialogState
+import com.kino.movies.presentation.designsystem.component.alertDialog.KinoAlertDialog
+import com.kino.movies.presentation.navigation.navHost.KinomoviesNavHost
+import com.kino.movies.presentation.utils.ObserveAsEvent
+import com.kino.movies.presentation.utils.UiNotification
+import com.kino.movies.presentation.utils.UiNotificationController
 import com.kino.movies.presentation.utils.bottomBarDestinations
 import com.kino.movies.presentation.utils.bottomBarSetRoutes
+import kotlinx.coroutines.launch
 
 const val NO_RESOURCE = 0
+
 @Composable
 fun MainScreen(
     navController: NavHostController = rememberNavController(),
@@ -39,10 +50,39 @@ fun MainScreen(
         }
     }
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    val dialogState = remember { AlertDialogState() }
+
+    UiNotificationController.notification.ObserveAsEvent(key1 = snackbarHostState) { event ->
+        scope.launch {
+            if (event is UiNotification.DialogNotificationEvent) {
+                dialogState.showDialog(event)
+            } else if (event is UiNotification.SnackBarNotificationEvent) {
+                snackbarHostState.currentSnackbarData?.dismiss()
+                val result = snackbarHostState.showSnackbar(
+                    message = event.message,
+                    actionLabel = event.actionLabel,
+                    duration = event.duration,
+                )
+                if (result == SnackbarResult.ActionPerformed) {
+                    event.action?.invoke()
+                }
+            }
+        }
+
+    }
+
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+            )
+        },
+
         topBar = {
-            KinoAnimateVisibility(visible = showBars.value)
-            {
+            KinoAnimateVisibility(visible = showBars.value) {
                 KinoTopBar(
                     title = if (titleRes != NO_RESOURCE) stringResource(id = titleRes) else ""
                 )
@@ -50,32 +90,29 @@ fun MainScreen(
         },
         bottomBar = {
             KinoAnimateVisibility(visible = showBars.value) {
-                KinoBottomBar(
-                    destinations = bottomBarDestinations,
+                KinoBottomBar(destinations = bottomBarDestinations,
                     currentRoute = currentRoute,
                     onNavigateToDestination = { bottomBarDestination ->
                         navController.navigate(bottomBarDestination.route) {
                             popUpTo(navController.graph.startDestinationId)
                             launchSingleTop = true
                         }
-                    }
-                )
+                    })
             }
         },
-        ) { padding ->
+    ) { padding ->
+        KinoAlertDialog(dialogState)
         KinomoviesNavHost(navController, modifier = Modifier.padding(padding))
     }
 }
 
+
 @Composable
 fun KinoAnimateVisibility(
-    visible: Boolean = true,
-    content: @Composable () -> Unit
+    visible: Boolean = true, content: @Composable () -> Unit
 ) {
     AnimatedVisibility(
-        visible = visible,
-        enter = fadeIn(),
-        exit = fadeOut()
+        visible = visible, enter = fadeIn(), exit = fadeOut()
     ) {
         content()
     }

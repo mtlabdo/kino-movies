@@ -13,7 +13,6 @@ val darkModeSetting = SettingUiItem(
 val languageSetting = SettingUiItem(
     id = "language",
     icon = R.drawable.ic_launcher_foreground,
-    subTitle = languages[0].second,
     settingName = "Langue",
 )
 

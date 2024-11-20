@@ -1,6 +1,5 @@
 package com.kino.movies.presentation.utils
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -8,7 +7,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.kino.movies.R
-import com.kino.movies.presentation.navigation.Screen
+import com.kino.movies.presentation.navigation.navHost.Screen
 
 data class BottomBarDestination(
     val icon: ImageVector,

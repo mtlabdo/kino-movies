@@ -11,8 +11,7 @@ import kotlinx.coroutines.launch
 import com.kino.movies.domain.Result
 import com.kino.movies.domain.usecase.movie.AddFavoriteMovieUseCase
 import com.kino.movies.domain.usecase.movie.DeleteFavoriteMovieUseCase
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
+import com.kino.movies.presentation.utils.UiNotificationController
 
 class DetailViewModel(
     private val getMovieDetailUseCase: GetMovieDetailUseCase,
@@ -20,9 +19,6 @@ class DetailViewModel(
     private val deleteFavoriteMovieUseCase: DeleteFavoriteMovieUseCase,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
-
-    private val _notification = Channel<UiNotification>()
-    val notification = _notification.receiveAsFlow()
 
     private val _viewState = MutableStateFlow<DetailViewState?>(null)
     val viewState = _viewState.asStateFlow()
@@ -38,11 +34,10 @@ class DetailViewModel(
 
                     is Result.Error -> {
                         _viewState.value = null
-                        val errorNotification = UiNotification.Error(
-                            title = "Oups!",
-                            message = "${result.message}"
+                        val errorNotification = UiNotification.SnackBarNotificationEvent(
+                            message = "Oups! erreur ${result.code} ${result.message}",
                         )
-                        _notification.send(errorNotification)
+                        UiNotificationController.sendUiNotification(errorNotification)
                     }
                 }
             }

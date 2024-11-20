@@ -25,5 +25,4 @@ interface IUserPreferencesRepository {
      * Set the user selected [AppLanguage].
      */
     suspend fun setLanguage(language: AppLanguage)
-
 }
