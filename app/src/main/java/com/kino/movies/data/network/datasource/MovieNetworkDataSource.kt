@@ -1,9 +1,7 @@
 package com.kino.movies.data.network.datasource
 
-import android.util.Log
 import com.kino.movies.data.network.DISCOVER_MOVIE_API
 import com.kino.movies.data.network.dto.ApiResponse
-import com.kino.movies.data.network.dto.MovieDto
 import com.kino.movies.data.network.dto._MovieDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -19,10 +17,7 @@ class MovieNetworkDataSource(private val httpClient: HttpClient) {
         return try {
             val response: HttpResponse = httpClient.get(DISCOVER_MOVIE_API)
 
-            val resValue = HttpStatusCode.OK.value
-
             when (response.status.value) {
-                //when (resValue) {
                 in 200..299 -> {
                     val moviesNetwork: ApiResponse<_MovieDto> = response.body()
                     Result.Success(moviesNetwork.results)

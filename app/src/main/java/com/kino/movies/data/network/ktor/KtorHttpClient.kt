@@ -24,7 +24,7 @@ object KtorHttpClient {
 
                 header(
                     "Authorization",
-                    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZjA5OTVmMzM4MTYxN2FhNDA1Y2UxYzE1MzQ4ZmZjMCIsIm5iZiI6MTczMTE4NzQ1OS42MjM1MDIzLCJzdWIiOiI1YzcwMGJjNGMzYTM2ODVhMmVkNTNhZjUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.JJdeNVKKAUn3shtbTykNQjM-RQZT9V7zeBeI9qU8Zcs"
+                    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZjA5OTVmMzM4MTYxN2FhNDA1Y2UxYzE1MzQ4ZmZjMCIsIm5iZiI6MTczMjE0MjkzMi4zODAyMTMzLCJzdWIiOiI1YzcwMGJjNGMzYTM2ODVhMmVkNTNhZjUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.NcRvPrP9BHO8ZlLX3m3S_h_e5ysqjKGXdjSg8FbgY30"
                 )
             }
         }

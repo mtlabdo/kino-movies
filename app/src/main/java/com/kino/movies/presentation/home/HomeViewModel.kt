@@ -19,7 +19,7 @@ class HomeViewModel(
 ) : ViewModel() {
 
 
-    private val _viewState = MutableStateFlow<HomeViewState?>(null)
+    private val _viewState = MutableStateFlow<HomeViewState?>(HomeViewState.Loading)
     val viewState = _viewState.onStart {
         searchMovies()
     }.stateIn(
