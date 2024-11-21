@@ -1,5 +1,6 @@
 package com.kino.movies.presentation.setting
 
+import android.app.Activity
 import android.app.LocaleManager
 import android.content.Context
 import android.os.Build
@@ -28,12 +29,20 @@ sealed class Language {
         private fun setLocaleForDevicesLowerThanTiramisu(localeTag: String, context: Context) {
             val locale = Locale(localeTag)
             Locale.setDefault(locale)
+
             val resources = context.resources
             val configuration = resources.configuration
             configuration.setLocale(locale)
-            resources.updateConfiguration(configuration, resources.displayMetrics)
-        }
 
+            if (context is Activity) {
+                context.apply {
+                    resources.updateConfiguration(configuration, resources.displayMetrics)
+                    recreate()
+                }
+            } else {
+                resources.updateConfiguration(configuration, resources.displayMetrics)
+            }
+        }
         internal fun getCurrentLanguage(context: Context): Language {
             return this.allowedLocales.find { it.code == getCurrentLocale(context) } ?: English
         }

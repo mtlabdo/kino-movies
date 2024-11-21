@@ -1,11 +1,6 @@
 package com.kino.movies.presentation.setting
 
-import android.app.LocaleManager
-import android.content.Context
-import android.os.Build
-import android.os.LocaleList
 import androidx.annotation.DrawableRes
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -32,7 +27,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.*
 import androidx.core.os.ConfigurationCompat
 import androidx.core.os.LocaleListCompat
-import com.kino.movies.R
 import com.kino.movies.domain.model.AppTheme
 import com.kino.movies.presentation.designsystem.component.CustomSwitch
 import com.kino.movies.presentation.designsystem.component.KinoUiLoading
