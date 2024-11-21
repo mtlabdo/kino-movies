@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="home">होम</string>
+    <string name="favorite">पसंदीदा</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="detail">फिल्म विवरण</string>
+    <string name="empty_content">कोई परिणाम नहीं</string>
+    <string name="retry">पुनः प्रयास करें</string>
+
+    <string name="error_get_favorite_movies">पसंदीदा फिल्मों को पुनः प्राप्त करने में त्रुटि!</string>
+    <string name="error_get_preferences">उपयोगकर्ता प्राथमिकताओं को पुनः प्राप्त करने में त्रुटि!</string>
+    <string name="error_get_movies">फिल्मों को पुनः प्राप्त करने में त्रुटि!</string>
+    <string name="error_get_movie_detail">फिल्म के विवरण को पुनः प्राप्त करने में त्रुटि!</string>
+
+    <string name="empty_favorite_movies">पसंदीदा सूची में कोई फिल्म नहीं</string>
+
+    <string name="loading">लोड हो रहा है...</string>
+
+    <string name="no_title">अज्ञात फिल्म शीर्षक</string>
+    <string name="year">रिलीज़ वर्ष: %s</string>
+    <string name="genre">श्रेणी: %s</string>
+    <string name="rank">रैंक: #%s</string>
+
+    <string name="language">भाषा</string>
+    <string name="dark_mode">डार्क मोड</string>
+    <string name="default_name">डिफ़ॉल्ट</string>
+
+    <string name="select_lang_title">भाषा चुनें</string>
+    <string name="close">बंद करें</string>
+
+    <string name="on">सक्रिय</string>
+    <string name="off">निष्क्रिय</string>
+
+    <string name="error_client">सर्वर के साथ संचार करते समय क्लाइंट त्रुटि हुई</string>
+    <string name="error_server">फिल्में प्राप्त करते समय सर्वर त्रुटि हुई</string>
+    <string name="error_communication">सर्वर के साथ संचार त्रुटि हुई</string>
+    <string name="error_network">नेटवर्क त्रुटि हुई, कृपया अपना कनेक्शन जांचें और पुनः प्रयास करें!</string>
+    <string name="error_unknown">सर्वर के साथ संचार करते समय अप्रत्याशित त्रुटि हुई</string>
+    <string name="error_save_movies">फिल्मों को सहेजने में त्रुटि</string>
+    <string name="error_delete_movie">फिल्म को हटाने में त्रुटि</string>
+    <string name="error_delete_fav_movie">पसंदीदा से फिल्म को हटाने में त्रुटि</string>
+    <string name="error_add_fav_movie">पसंदीदा में फिल्म जोड़ने में त्रुटि</string>
+    <string name="error_inattendue">एक अप्रत्याशित त्रुटि हुई</string>
+</resources>

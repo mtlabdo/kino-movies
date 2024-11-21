@@ -2,6 +2,7 @@ package com.kino.movies.presentation.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kino.movies.R
 import com.kino.movies.domain.usecase.movie.GetFavoriteMoviesUseCase
 import com.kino.movies.presentation.utils.UiNotification
 import kotlinx.coroutines.CoroutineDispatcher
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import com.kino.movies.domain.Result
+import com.kino.movies.presentation.utils.UIText
 import com.kino.movies.presentation.utils.UiNotificationController
 
 class FavoriteViewModel(
@@ -39,8 +41,8 @@ class FavoriteViewModel(
                     is Result.Error -> {
                         _viewState.value = null
                         val errorNotification = UiNotification.SnackBarNotificationEvent(
-                            message = "Erreur lors de la récupération des films favoris !",
-                            actionLabel = "Réessayer",
+                            message = result.message ?: UIText.StringResource(R.string.error_get_favorite_movies),
+                            actionLabel = UIText.StringResource(R.string.retry),
                             action = { getFavoriteMovies() }
                         )
                         UiNotificationController.sendUiNotification(errorNotification)

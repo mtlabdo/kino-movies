@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -43,27 +44,28 @@ fun HomeScreenContent(
 ) {
     Column(modifier = modifier.fillMaxSize()) {
 
-        when (viewState) {
-            is HomeViewState.Loading -> {
+        when  {
+            viewState is HomeViewState.Loading -> {
                 KinoUiLoading()
             }
 
-            is HomeViewState.MoviesReady -> {
+            viewState is HomeViewState.MoviesReady  && viewState.movies.isNotEmpty() -> {
                 MoviesList(movies = viewState.movies, onItemClick = toDetail)
             }
 
             else -> {
                 // TODO MAKE COMPONENT (EMPTY CONTENT)
-                Box(
+                Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp),
-                    contentAlignment = Alignment.Center
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
-                    Text("Aucun résultat")
+                    Text(stringResource(R.string.empty_content))
                     Spacer(modifier = Modifier.height(16.dp))
                     Button(onClick = onRefresh) {
-                        Text("Réessayer")
+                        Text(stringResource(R.string.retry))
                     }
                 }
             }

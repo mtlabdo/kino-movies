@@ -1,7 +1,6 @@
 package com.kino.movies.presentation.navigation.node
 
-import android.util.Log
-import androidx.compose.runtime.LaunchedEffect
+
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle

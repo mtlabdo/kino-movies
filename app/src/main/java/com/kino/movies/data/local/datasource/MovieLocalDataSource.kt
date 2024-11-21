@@ -1,9 +1,12 @@
 package com.kino.movies.data.local.datasource
 
+import com.kino.movies.R
 import com.kino.movies.data.local.dao.MovieDao
 import com.kino.movies.data.local.entity.MovieEntity
 
 import kotlinx.coroutines.flow.Flow
+import com.kino.movies.domain.Result
+import com.kino.movies.presentation.utils.UIText
 
 class MovieLocalDataSource(
     private val movieDao: MovieDao
@@ -22,18 +25,18 @@ class MovieLocalDataSource(
             movies.forEach { movie ->
                 movieDao.upsertMovie(movie)
             }
-            Result.success(Unit)
+            Result.Success(Unit)
         } catch (e: Exception) {
-            Result.failure(Exception("Erreur lors de l'ajout des films: ${e.localizedMessage}"))
+            Result.Error(message = UIText.StringResource(R.string.error_save_movies))
         }
     }
 
     suspend fun deleteMovie(movie: MovieEntity): Result<Unit> {
         return try {
             movieDao.deleteMovie(movie)
-            Result.success(Unit)
+            Result.Success(Unit)
         } catch (e: Exception) {
-            Result.failure(Exception("Erreur lors de la suppression du film : ${e.localizedMessage}"))
+            Result.Error(message = UIText.StringResource(R.string.error_delete_movie))
         }
     }
 
@@ -41,30 +44,22 @@ class MovieLocalDataSource(
         return movieDao.getMovieById(id)
     }
 
-    suspend fun deleteAllMovies(): Result<Unit> {
-        return try {
-            movieDao.deleteAllMovies()
-            Result.success(Unit)
-        } catch (e: Exception) {
-            Result.failure(Exception("Erreur lors de la suppression des films: ${e.localizedMessage}"))
-        }
-    }
 
     suspend fun addMovieFavorite(movieId: String) {
         try {
             movieDao.setMovieFavorite(movieId)
-            Result.success(Unit)
+            Result.Success(Unit)
         } catch (e: Exception) {
-            Result.failure(Exception("Erreur lors de l'ajout du film aux favoris: ${e.localizedMessage}"))
+            Result.Error(message = UIText.StringResource(R.string.error_add_fav_movie))
         }
     }
 
     suspend fun removeMovieFavorite(movieId: String) {
         try {
             movieDao.removeMovieFavorite(movieId)
-            Result.success(Unit)
+            Result.Success(Unit)
         } catch (e: Exception) {
-            Result.failure(Exception("Erreur lors de la suppression du film des favoris: ${e.localizedMessage}"))
+            Result.Error(message = UIText.StringResource(R.string.error_delete_movie))
         }
     }
 }

@@ -1,7 +1,5 @@
 package com.kino.movies.presentation.setting
 
-import com.kino.movies.domain.model.AppLanguage
-import com.kino.movies.domain.model.AppTheme
 
 sealed class SettingViewState {
 
@@ -21,6 +19,5 @@ data class ThemeSetting(
 
 data class LanguageSetting(
     val settingUiItem: SettingUiItem,
-    val selectedLanguage: AppLanguage,
-    val languages: List<Pair<AppLanguage, String>>
+    val selectedLanguage: String?,
 )

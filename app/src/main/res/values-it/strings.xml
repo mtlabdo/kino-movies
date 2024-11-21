@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="home">Home</string>
+    <string name="favorite">Preferiti</string>
+    <string name="settings">Impostazioni</string>
+    <string name="detail">Dettagli del film</string>
+    <string name="empty_content">Nessun risultato</string>
+    <string name="retry">Riprova</string>
+
+    <string name="error_get_favorite_movies">Errore durante il recupero dei film preferiti!</string>
+    <string name="error_get_preferences">Errore durante il recupero delle preferenze utente!</string>
+    <string name="error_get_movies">Errore durante il recupero dei film!</string>
+    <string name="error_get_movie_detail">Errore durante il recupero dei dettagli del film!</string>
+
+    <string name="empty_favorite_movies">Nessun film nella lista dei preferiti</string>
+
+    <string name="loading">Caricamento in corso...</string>
+
+    <string name="no_title">Titolo del film sconosciuto</string>
+    <string name="year">Anno di uscita: %s</string>
+    <string name="genre">Genere: %s</string>
+    <string name="rank">Classifica: #%s</string>
+
+    <string name="language">Lingua</string>
+    <string name="dark_mode">Modalità scura</string>
+    <string name="default_name">Predefinito</string>
+
+    <string name="select_lang_title">Scegli una lingua</string>
+    <string name="close">Chiudi</string>
+
+    <string name="on">Attivo</string>
+    <string name="off">Disattivato</string>
+
+    <string name="error_client">Errore del client durante la comunicazione con il server</string>
+    <string name="error_server">Errore del server durante il recupero dei film</string>
+    <string name="error_communication">Errore di comunicazione con il server</string>
+    <string name="error_network">Errore di rete, controlla la connessione e riprova!</string>
+    <string name="error_unknown">Errore imprevisto durante la comunicazione con il server</string>
+    <string name="error_save_movies">Errore durante il salvataggio dei film</string>
+    <string name="error_delete_movie">Errore durante l\'eliminazione del film</string>
+    <string name="error_delete_fav_movie">Errore durante la rimozione del film dai preferiti</string>
+    <string name="error_add_fav_movie">Errore durante l\'aggiunta del film ai preferiti</string>
+    <string name="error_inattendue">Si è verificato un errore imprevisto</string>
+</resources>

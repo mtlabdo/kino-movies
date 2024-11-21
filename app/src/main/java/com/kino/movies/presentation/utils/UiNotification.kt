@@ -8,19 +8,19 @@ sealed class UiNotification {
     data class DialogNotificationEvent(
         val icon: ImageVector,
         val color: Color,
-        val title: String,
-        val message: String,
-        val positiveButtonText: String? = null,
+        val title: UIText,
+        val message: UIText,
+        val positiveButtonText: UIText? = null,
         val positiveButtonAction: (() -> Unit)? = null,
-        val negativeButtonText: String? = null,
+        val negativeButtonText: UIText? = null,
         val negativeButtonAction: (() -> Unit)? = null,
     ) :
         UiNotification()
 
     data class SnackBarNotificationEvent(
-        val message: String,
-        val duration: SnackbarDuration = SnackbarDuration.Long,
-        val actionLabel: String? = null,
+        val message: UIText,
+        val duration: SnackbarDuration = SnackbarDuration.Short,
+        val actionLabel: UIText? = null,
         val action: (() -> Unit)? = null
     ) : UiNotification()
 }

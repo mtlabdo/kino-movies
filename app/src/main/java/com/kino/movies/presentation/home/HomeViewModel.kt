@@ -2,8 +2,10 @@ package com.kino.movies.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kino.movies.R
 import com.kino.movies.domain.Result
 import com.kino.movies.domain.usecase.movie.GetMoviesUseCase
+import com.kino.movies.presentation.utils.UIText
 import com.kino.movies.presentation.utils.UiNotification
 import com.kino.movies.presentation.utils.UiNotificationController
 import kotlinx.coroutines.CoroutineDispatcher
@@ -30,7 +32,9 @@ class HomeViewModel(
 
     fun searchMovies(query: String? = null) {
         viewModelScope.launch(ioDispatcher) {
-            getMoviesUseCase(query).collect { result ->
+            getMoviesUseCase(query).onStart {
+                _viewState.value = HomeViewState.Loading
+            }.collect { result ->
                 when (result) {
                     is Result.Success -> {
                         _viewState.value = HomeViewState.MoviesReady(result.value)
@@ -39,8 +43,9 @@ class HomeViewModel(
                     is Result.Error -> {
                         _viewState.value = null
                         val errorNotification = UiNotification.SnackBarNotificationEvent(
-                            message = "Oups! ${result.message}",
-                            actionLabel = "Réessayer",
+                            message = result.message
+                                ?: UIText.StringResource(R.string.error_get_movies),
+                            actionLabel = UIText.StringResource(R.string.retry),
                             action = { searchMovies() },
                         )
                         UiNotificationController.sendUiNotification(errorNotification)

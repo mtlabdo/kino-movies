@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="home">الرئيسية</string>
+    <string name="favorite">المفضلة</string>
+    <string name="settings">الإعدادات</string>
+    <string name="detail">تفاصيل الفيلم</string>
+    <string name="empty_content">لا توجد نتائج</string>
+    <string name="retry">إعادة المحاولة</string>
+
+    <string name="error_get_favorite_movies">خطأ أثناء استرجاع الأفلام المفضلة!</string>
+    <string name="error_get_preferences">خطأ أثناء استرجاع تفضيلات المستخدم!</string>
+    <string name="error_get_movies">خطأ أثناء استرجاع الأفلام!</string>
+    <string name="error_get_movie_detail">خطأ أثناء استرجاع تفاصيل الفيلم!</string>
+
+    <string name="empty_favorite_movies">لا توجد أفلام في قائمة المفضلة</string>
+
+    <string name="loading">جارٍ التحميل...</string>
+
+    <string name="no_title">عنوان الفيلم غير معروف</string>
+    <string name="year">سنة الإصدار: %s</string>
+    <string name="genre">النوع: %s</string>
+    <string name="rank">الترتيب: #%s</string>
+
+    <string name="language">اللغة</string>
+    <string name="dark_mode">الوضع الداكن</string>
+    <string name="default_name">افتراضي</string>
+
+    <string name="select_lang_title">اختر اللغة</string>
+    <string name="close">إغلاق</string>
+
+    <string name="on">تشغيل</string>
+    <string name="off">إيقاف</string>
+
+    <string name="error_client">حدث خطأ من العميل أثناء الاتصال بالخادم</string>
+    <string name="error_server">حدث خطأ في الخادم أثناء استرجاع الأفلام</string>
+    <string name="error_communication">حدث خطأ في الاتصال بالخادم</string>
+    <string name="error_network">حدث خطأ في الشبكة، يرجى التحقق من الاتصال والمحاولة مرة أخرى!</string>
+    <string name="error_unknown">حدث خطأ غير متوقع أثناء الاتصال بالخادم</string>
+    <string name="error_save_movies">خطأ أثناء حفظ الأفلام</string>
+    <string name="error_delete_movie">خطأ أثناء حذف الفيلم</string>
+    <string name="error_delete_fav_movie">خطأ أثناء إزالة الفيلم من المفضلة</string>
+    <string name="error_add_fav_movie">خطأ أثناء إضافة الفيلم إلى المفضلة</string>
+    <string name="error_inattendue">حدث خطأ غير متوقع</string>
+</resources>

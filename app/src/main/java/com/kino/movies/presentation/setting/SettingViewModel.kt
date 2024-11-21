@@ -1,19 +1,15 @@
 package com.kino.movies.presentation.setting
 
-import android.content.Context
-import android.content.res.Configuration
-import android.util.Log
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kino.movies.domain.model.AppLanguage
+import com.kino.movies.R
 import com.kino.movies.domain.model.AppTheme
 import com.kino.movies.domain.usecase.appLang.GetAppLangUseCase
 import com.kino.movies.domain.usecase.appLang.SetAppLangUseCase
 import com.kino.movies.domain.usecase.apptheme.GetAppThemeUseCase
 import com.kino.movies.domain.usecase.apptheme.SetAppThemeUseCase
 import com.kino.movies.presentation.utils.SystemThemeUtils
+import com.kino.movies.presentation.utils.UIText
 import com.kino.movies.presentation.utils.UiNotification
 import com.kino.movies.presentation.utils.UiNotificationController
 import kotlinx.coroutines.CoroutineDispatcher
@@ -47,7 +43,7 @@ class SettingViewModel(
 
     private fun observeUserPreferences() {
         viewModelScope.launch(ioDispatcher) {
-            combine<AppTheme, AppLanguage, Pair<AppTheme, AppLanguage>>(
+            combine<AppTheme, String?, Pair<AppTheme, String?>>(
                 getAppThemeUseCase.invoke(),
                 getAppLanguageUseCase.invoke()
             ) { theme, language ->
@@ -55,7 +51,7 @@ class SettingViewModel(
             }.catch {
                 UiNotificationController.sendUiNotification(
                     UiNotification.SnackBarNotificationEvent(
-                        message = "Erreur lors de la récupération de vos préférences utilisateur !"
+                        message = UIText.StringResource(R.string.error_get_preferences),
                     )
                 )
             }.distinctUntilChanged().collect {
@@ -69,11 +65,9 @@ class SettingViewModel(
                 )
                 val languageSetting = LanguageSetting(
                     settingUiItem = languageSetting.copy(
-                        subTitle = languagesList.find { lang -> lang.first == it.second }?.second
-                            ?: it.second.name
+                        subTitle = R.string.language
                     ),
                     selectedLanguage = it.second,
-                    languages = languagesList,
                 )
                 _viewState.value = SettingViewState.Setting(theme, languageSetting)
             }
@@ -93,9 +87,9 @@ class SettingViewModel(
         }
     }
 
-    private fun onChangeLanguage(language: AppLanguage) {
+    private fun onChangeLanguage(language: Language) {
         viewModelScope.launch(ioDispatcher) {
-            setAppLanguageUseCase.invoke(language)
+            setAppLanguageUseCase.invoke(language.code)
         }
     }
 }

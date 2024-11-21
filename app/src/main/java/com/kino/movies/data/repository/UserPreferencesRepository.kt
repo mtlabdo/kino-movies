@@ -6,7 +6,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import com.kino.movies.data.preferences.UserPreferencesKeys
-import com.kino.movies.domain.model.AppLanguage
 import com.kino.movies.domain.model.AppTheme
 import com.kino.movies.domain.repository.IUserPreferencesRepository
 import kotlinx.coroutines.flow.Flow
@@ -32,19 +31,18 @@ class UserPreferencesRepository(
         }
     }
 
-    override fun getLanguage(): Flow<AppLanguage> = dataStore.data.catch { exception ->
+    override fun getLanguage(): Flow<String?> = dataStore.data.catch { exception ->
         when (exception) {
             is IOException -> emit(emptyPreferences())
             else -> throw exception
         }
     }.map { preferences ->
-        val userLanguagePreference = preferences[UserPreferencesKeys.USER_LANGUAGE]
-        AppLanguage.entries.find { it.name == userLanguagePreference } ?: AppLanguage.ENGLISH
+        preferences[UserPreferencesKeys.USER_LANGUAGE]
     }
 
-    override suspend fun setLanguage(language: AppLanguage) {
+    override suspend fun setLanguage(localCode: String) {
         dataStore.edit { preferences ->
-            preferences[UserPreferencesKeys.USER_LANGUAGE] = language.name
+            preferences[UserPreferencesKeys.USER_LANGUAGE] = localCode
         }
     }
 }

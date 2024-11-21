@@ -8,8 +8,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.kino.movies.presentation.utils.UiNotification
+import com.kino.movies.presentation.utils.getString
 
 @Composable
 fun KinoAlertDialog(
@@ -28,31 +30,34 @@ private fun AlertDialog(
     currentDialogData: UiNotification.DialogNotificationEvent,
     onDismiss: () -> Unit = {},
 ) {
+    val context = LocalContext.current
     AlertDialog(icon = {
         Icon(
             currentDialogData.icon, contentDescription = null, Modifier.size(32.dp)
         )
     }, iconContentColor = currentDialogData.color, onDismissRequest = { }, title = {
         Text(
-            currentDialogData.title, style = MaterialTheme.typography.headlineMedium
+            currentDialogData.title.getString(context = context),
+            style = MaterialTheme.typography.headlineMedium
         )
     }, text = {
         Text(
-            currentDialogData.message, style = MaterialTheme.typography.bodyLarge
+            currentDialogData.message.getString(context = context),
+            style = MaterialTheme.typography.bodyLarge
         )
     }, dismissButton = {
         if (currentDialogData.negativeButtonText != null) Button(onClick = {
             currentDialogData.negativeButtonAction?.invoke()
             onDismiss()
         }) {
-            Text(currentDialogData.negativeButtonText)
+            Text(currentDialogData.negativeButtonText.getString(context = context))
         }
     }, confirmButton = {
         if (currentDialogData.positiveButtonText != null) Button(onClick = {
             currentDialogData.positiveButtonAction?.invoke()
             onDismiss()
         }) {
-            Text(currentDialogData.positiveButtonText)
+            Text(currentDialogData.positiveButtonText.getString(context = context))
         }
     })
 }

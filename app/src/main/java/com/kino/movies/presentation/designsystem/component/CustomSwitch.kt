@@ -29,8 +29,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.kino.movies.R
 import com.kino.movies.presentation.designsystem.composable.SpacerHorizontal16
 import com.kino.movies.presentation.designsystem.composable.SpacerVertical16
 
@@ -63,7 +65,7 @@ fun CustomSwitch(
             ), contentAlignment = alignment
     ) {
         Text(
-            text = if (switchOn) "ON" else "       OFF",
+            text = if (switchOn) stringResource(R.string.on) else "       ${stringResource(R.string.off)}",
             fontWeight = MaterialTheme.typography.bodyLarge.fontWeight,
             fontSize = MaterialTheme.typography.bodyLarge.fontSize,
             color = MaterialTheme.colorScheme.outline

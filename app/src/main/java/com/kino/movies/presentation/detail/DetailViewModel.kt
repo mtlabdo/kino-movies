@@ -2,6 +2,7 @@ package com.kino.movies.presentation.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kino.movies.R
 import com.kino.movies.domain.usecase.movie.GetMovieDetailUseCase
 import com.kino.movies.presentation.utils.UiNotification
 import kotlinx.coroutines.CoroutineDispatcher
@@ -11,6 +12,7 @@ import kotlinx.coroutines.launch
 import com.kino.movies.domain.Result
 import com.kino.movies.domain.usecase.movie.AddFavoriteMovieUseCase
 import com.kino.movies.domain.usecase.movie.DeleteFavoriteMovieUseCase
+import com.kino.movies.presentation.utils.UIText
 import com.kino.movies.presentation.utils.UiNotificationController
 
 class DetailViewModel(
@@ -35,7 +37,8 @@ class DetailViewModel(
                     is Result.Error -> {
                         _viewState.value = null
                         val errorNotification = UiNotification.SnackBarNotificationEvent(
-                            message = "Oups! erreur ${result.code} ${result.message}",
+                            message = result.message
+                                ?: UIText.StringResource(R.string.error_get_movie_detail),
                         )
                         UiNotificationController.sendUiNotification(errorNotification)
                     }

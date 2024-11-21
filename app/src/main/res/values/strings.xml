@@ -1,7 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">kino-movies</string>
-    <string name="home">Home</string>
-    <string name="favorite">Favorite</string>
-    <string name="settings">Settings</string>
-    <string name="detail">Movie detail</string>
+    <string name="app_name" translatable="false">kino-movies</string>
+
+    <string name="english" translatable="false">English</string>
+    <string name="hindi" translatable="false">हिंदी</string>
+    <string name="french" translatable="false">français</string>
+    <string name="arabic" translatable="false">العربية</string>
+    <string name="spanish" translatable="false">Español</string>
+    <string name="italian" translatable="false">Italiano</string>
+
+    <string name="home">Accueil</string>
+    <string name="favorite">Favoris</string>
+    <string name="settings">Paramètres</string>
+    <string name="detail">Détail du film</string>
+    <string name="empty_content">Aucun résultat</string>
+    <string name="retry">Réessayer</string>
+
+    <string name="error_get_favorite_movies">Erreur lors de la récupération des films favoris !</string>
+    <string name="error_get_preferences">Erreur lors de la récupération de vos préférences utilisateur !</string>
+    <string name="error_get_movies">Erreur lors de la récupération des films !</string>
+    <string name="error_get_movie_detail">Erreur lors de la récupération des détails du film !</string>
+
+    <string name="empty_favorite_movies">Aucun film dans la liste des favoris</string>
+
+    <string name="loading">Chargement en cours...</string>
+
+    <string name="no_title">Titre du film inconnu</string>
+    <string name="year">Année de sortie : %s</string>
+    <string name="genre">Genre : %s</string>
+    <string name="rank">Classement : #%s</string>
+
+    <string name="language">Langue</string>
+    <string name="dark_mode">Mode sombre</string>
+    <string name="default_name">Par défaut</string>
+
+    <string name="select_lang_title">Choisir une langue</string>
+    <string name="close">Fermer</string>
+
+    <string name="on">Activé</string>
+    <string name="off">Désactivé</string>
+
+    <string name="error_client">Une erreur client s\'est produite lors la communication avec le serveur</string>
+    <string name="error_server">Une erreur serveur s\'est produite lors la récupération des films</string>
+    <string name="error_communication">Une erreur de communication avec le serveur s\'est produite</string>
+    <string name="error_network">Une erreur de réseau s\'est produite, veuillez vérifier votre connexion et réessayer !</string>
+    <string name="error_unknown">Une erreur inattendue s\'est produite lors de la communication avec le serveur</string>
+    <string name="error_save_movies">Erreur lors du sauvegardes des films</string>
+    <string name="error_delete_movie">Erreur lors de la suppression du film</string>
+    <string name="error_delete_fav_movie">Erreur lors de la suppression du film des favoris</string>
+    <string name="error_add_fav_movie">Erreur lors de l\'ajout du film aux favoris</string>
+    <string name="error_inattendue">Une erreur inattendue s\'est produite</string>
 </resources>

@@ -1,10 +1,12 @@
 package com.kino.movies.domain
 
+import com.kino.movies.presentation.utils.UIText
+
 sealed class Result<out A> {
     data class Success<out A>(val value: A) : Result<A>()
     data class Error(
         val code: Int? = null,
-        val message: String? = null,
+        val message: UIText? = null,
         val exception: Throwable? = null
     ) : Result<Nothing>()
 }

@@ -41,6 +41,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
@@ -77,10 +78,10 @@ fun DetailScreenContent(
                         .padding(16.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("Aucun résultat")
+                    Text(stringResource(R.string.empty_content))
                     Spacer(modifier = Modifier.height(16.dp))
                     Button(onClick = onRefresh) {
-                        Text("Réessayer")
+                        Text(stringResource(R.string.retry))
                     }
                 }
             }
@@ -120,7 +121,7 @@ fun MovieDetail(movieDetail: Movie, onUpdateFavorite: (newFavoriteState) -> Unit
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = movieDetail.title ?: "- Titre inconnu -",
+                text = movieDetail.title ?: stringResource(R.string.no_title),
                 maxLines = 2,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.weight(5f)
@@ -129,15 +130,18 @@ fun MovieDetail(movieDetail: Movie, onUpdateFavorite: (newFavoriteState) -> Unit
             Button(
                 onClick = {
                     isFavorite = !isFavorite
-                    onUpdateFavorite(isFavorite) },
-                modifier = Modifier.size(48.dp).weight(1f),
+                    onUpdateFavorite(isFavorite)
+                },
+                modifier = Modifier
+                    .size(48.dp)
+                    .weight(1f),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 4.dp
                 ),
                 shape = CircleShape,
                 contentPadding = PaddingValues(1.dp),
 
-            ) {
+                ) {
                 Icon(
                     imageVector = if (isFavorite) {
                         Icons.Filled.Favorite
@@ -157,17 +161,17 @@ fun MovieDetail(movieDetail: Movie, onUpdateFavorite: (newFavoriteState) -> Unit
 
 
         Spacer(modifier = Modifier.height(8.dp))
-        Text("Année de sortie : ${movieDetail.year ?: "-"}")
+        Text(stringResource(R.string.year, movieDetail.year.toString().ifEmpty { "-" }))
 
         Spacer(modifier = Modifier.height(8.dp))
-        Text("Genre : ${movieDetail.genre ?: "-"}")
+        Text(stringResource(R.string.genre, movieDetail.genre ?: "-"))
 
         Spacer(modifier = Modifier.height(12.dp))
 
         Row {
             CardLabel(text = "${movieDetail.rating ?: "-"}/10", icon = Icons.Default.Star)
             Spacer(modifier = Modifier.width(8.dp))
-            CardLabel(text = "Classement #${movieDetail.rank ?: "-"}")
+            CardLabel(text = stringResource(R.string.rank, movieDetail.rank.toString().ifEmpty { "-" }))
         }
 
         Spacer(modifier = Modifier.height(8.dp))

@@ -14,42 +14,42 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.kino.movies.domain.model.AppLanguage
+import com.kino.movies.R
 
 @Composable
 fun LanguagePickerDialog(
-    languages: List<Pair<AppLanguage, String>>,
-    selectedLanguage: AppLanguage,
-    onLanguageSelected: (AppLanguage) -> Unit,
+    selectedLanguageCode: String?,
+    onLanguageSelected: (Language) -> Unit,
     onDismiss: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = "Select Language") },
+        title = { Text(text = stringResource(R.string.select_lang_title)) },
         text = {
             Column {
-                languages.forEach { (language, displayName) ->
-                    Row (
+                Language.allowedLocales.forEach { lang ->
+                    Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { onLanguageSelected(language) }
+                            .clickable { onLanguageSelected(lang) }
                             .padding(vertical = 8.dp, horizontal = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
-                            selected = language == selectedLanguage,
-                            onClick = { onLanguageSelected(language) }
+                            selected = lang.code == selectedLanguageCode,
+                            onClick = { onLanguageSelected(lang) }
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = displayName)
+                        Text(text = stringResource(lang.titleRes))
                     }
                 }
             }
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = "Close")
+                Text(text = stringResource(R.string.close))
             }
         }
     )

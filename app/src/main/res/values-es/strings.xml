@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="home">Inicio</string>
+    <string name="favorite">Favoritos</string>
+    <string name="settings">Configuración</string>
+    <string name="detail">Detalles de la película</string>
+    <string name="empty_content">Sin resultados</string>
+    <string name="retry">Reintentar</string>
+
+    <string name="error_get_favorite_movies">¡Error al recuperar las películas favoritas!</string>
+    <string name="error_get_preferences">¡Error al recuperar las preferencias del usuario!</string>
+    <string name="error_get_movies">¡Error al recuperar las películas!</string>
+    <string name="error_get_movie_detail">¡Error al recuperar los detalles de la película!</string>
+
+    <string name="empty_favorite_movies">No hay películas en la lista de favoritos</string>
+
+    <string name="loading">Cargando...</string>
+
+    <string name="no_title">Título de la película desconocido</string>
+    <string name="year">Año de estreno: %s</string>
+    <string name="genre">Género: %s</string>
+    <string name="rank">Rango: #%s</string>
+
+    <string name="language">Idioma</string>
+    <string name="dark_mode">Modo oscuro</string>
+    <string name="default_name">Predeterminado</string>
+
+    <string name="select_lang_title">Elija un idioma</string>
+    <string name="close">Cerrar</string>
+
+    <string name="on">Activado</string>
+    <string name="off">Desactivado</string>
+
+    <string name="error_client">Se produjo un error del cliente durante la comunicación con el servidor</string>
+    <string name="error_server">Se produjo un error en el servidor al recuperar las películas</string>
+    <string name="error_communication">Se produjo un error de comunicación con el servidor</string>
+    <string name="error_network">Se produjo un error de red, ¡verifique su conexión e intente nuevamente!</string>
+    <string name="error_unknown">Se produjo un error inesperado durante la comunicación con el servidor</string>
+    <string name="error_save_movies">Error al guardar las películas</string>
+    <string name="error_delete_movie">Error al eliminar la película</string>
+    <string name="error_delete_fav_movie">Error al eliminar la película de favoritos</string>
+    <string name="error_add_fav_movie">Error al agregar la película a favoritos</string>
+    <string name="error_inattendue">Se produjo un error inesperado</string>
+</resources>

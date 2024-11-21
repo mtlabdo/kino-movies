@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -25,11 +26,12 @@ import com.kino.movies.presentation.designsystem.component.KinoTopBar
 import com.kino.movies.presentation.designsystem.component.alertDialog.AlertDialogState
 import com.kino.movies.presentation.designsystem.component.alertDialog.KinoAlertDialog
 import com.kino.movies.presentation.navigation.navHost.KinomoviesNavHost
-import com.kino.movies.presentation.utils.ObserveAsEvent
+import com.kino.movies.presentation.utils.ObserveAsEvents
 import com.kino.movies.presentation.utils.UiNotification
 import com.kino.movies.presentation.utils.UiNotificationController
 import com.kino.movies.presentation.utils.bottomBarDestinations
 import com.kino.movies.presentation.utils.bottomBarSetRoutes
+import com.kino.movies.presentation.utils.getString
 import kotlinx.coroutines.launch
 
 const val NO_RESOURCE = 0
@@ -43,6 +45,8 @@ fun MainScreen(
     val showBars = remember { mutableStateOf(false) }
     var titleRes by remember { mutableStateOf(NO_RESOURCE) }
 
+    val context = LocalContext.current
+
     LaunchedEffect(currentRoute) {
         showBars.value = currentRoute in bottomBarSetRoutes
         bottomBarDestinations.find { it.route == currentRoute }?.title?.let { resTitle ->
@@ -55,15 +59,15 @@ fun MainScreen(
 
     val dialogState = remember { AlertDialogState() }
 
-    UiNotificationController.notification.ObserveAsEvent(key1 = snackbarHostState) { event ->
+    ObserveAsEvents(UiNotificationController.notification) { event ->
         scope.launch {
             if (event is UiNotification.DialogNotificationEvent) {
                 dialogState.showDialog(event)
             } else if (event is UiNotification.SnackBarNotificationEvent) {
                 snackbarHostState.currentSnackbarData?.dismiss()
                 val result = snackbarHostState.showSnackbar(
-                    message = event.message,
-                    actionLabel = event.actionLabel,
+                    message = event.message.getString(context = context),
+                    actionLabel = event.actionLabel?.getString(context = context),
                     duration = event.duration,
                 )
                 if (result == SnackbarResult.ActionPerformed) {

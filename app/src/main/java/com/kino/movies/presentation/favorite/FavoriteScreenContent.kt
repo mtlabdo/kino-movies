@@ -17,7 +17,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.kino.movies.R
 import com.kino.movies.domain.model.Movie
 import com.kino.movies.presentation.designsystem.component.KinoUiLoading
 import com.kino.movies.presentation.home.MovieItem
@@ -40,7 +42,7 @@ fun FavoriteScreenContent(
             is FavoriteViewState.FavoriteMoviesReady -> {
                 if (viewState.favoriteMovies.isEmpty()) {
                     EmptyContent(
-                        message = "Aucun film dans la liste des favoris"
+                        message = stringResource(R.string.empty_favorite_movies)
                     )
                 } else {
                     FavoriteMoviesList(
@@ -52,7 +54,7 @@ fun FavoriteScreenContent(
 
             else -> {
                 ErrorContent(
-                    message = "Aucun résultat",
+                    message = stringResource(R.string.empty_content),
                     onRetry = onRefresh
                 )
             }
@@ -87,7 +89,7 @@ fun ErrorContent(
             Text(message)
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = onRetry) {
-                Text("Réessayer")
+                Text(stringResource(R.string.retry))
             }
         }
     }

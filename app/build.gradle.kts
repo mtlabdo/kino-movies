@@ -19,7 +19,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+       // resourceConfigurations += arrayOf("en", "fr", "hi", "ar", "es","it")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -47,6 +47,9 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+    androidResources {
+        //generateLocaleConfig = true
     }
 }
 

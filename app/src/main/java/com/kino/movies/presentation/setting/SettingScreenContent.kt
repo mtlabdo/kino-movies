@@ -1,6 +1,11 @@
 package com.kino.movies.presentation.setting
 
+import android.app.LocaleManager
+import android.content.Context
+import android.os.Build
+import android.os.LocaleList
 import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -13,18 +18,26 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.*
+import androidx.core.os.ConfigurationCompat
+import androidx.core.os.LocaleListCompat
+import com.kino.movies.R
 import com.kino.movies.domain.model.AppTheme
 import com.kino.movies.presentation.designsystem.component.CustomSwitch
 import com.kino.movies.presentation.designsystem.component.KinoUiLoading
 import com.kino.movies.presentation.designsystem.composable.SpacerVertical16
+import java.util.Locale
 
 @Composable
 fun SettingScreenContent(
@@ -50,6 +63,12 @@ fun SettingScreenContent(
     }
 }
 
+@Composable
+@ReadOnlyComposable
+fun getLocale(): Locale {
+    val configuration = LocalConfiguration.current
+    return ConfigurationCompat.getLocales(configuration).get(0) ?: LocaleListCompat.getDefault()[0]!!
+}
 
 @Composable
 fun SettingList(
@@ -68,7 +87,7 @@ fun themeSetting(
 ) {
     SettingItem(
         icon = themeState.settingUiItem.icon,
-        title = themeState.settingUiItem.settingName,
+        title = stringResource(id = themeState.settingUiItem.title),
         isSwitchUi = themeState.settingUiItem.isSwitchUi,
         isSwitchUiChecked = themeState.isDarkTheme,
         onSwitch = { switchedOn ->
@@ -85,37 +104,42 @@ fun LanguageSetting(
     languageState: LanguageSetting,
     onEvent: (SettingEvent) -> Unit
 ) {
+    val context = LocalContext.current
     var isDialogOpen by remember { mutableStateOf(false) }
+    val selectedLanguageCode = getLocale().language
+
     if (isDialogOpen) {
         LanguagePickerDialog(
-            languages = languageState.languages,
-            selectedLanguage = languageState.selectedLanguage,
+            selectedLanguageCode = selectedLanguageCode,
             onLanguageSelected = { selectedLanguage ->
                 onEvent(
                     SettingEvent.OnChangeLanguage(selectedLanguage)
                 )
                 isDialogOpen = false
+                Language.setLocale(context = context, localeCode = selectedLanguage.code)
             },
             onDismiss = { isDialogOpen = false }
         )
     }
     SettingItem(
         icon = languageState.settingUiItem.icon,
-        title = languageState.settingUiItem.settingName,
-        subTitle = languageState.settingUiItem.subTitle,
+        title = stringResource(id = languageState.settingUiItem.title),
+        subTitle = if(Language.getLanguageByCode(selectedLanguageCode)?.titleRes != null) {
+            stringResource(id = Language.getLanguageByCode(selectedLanguageCode)!!.titleRes)
+        } else {
+            selectedLanguageCode
+        },
         onBoxClicked = {
             isDialogOpen = true
         }
-
     )
 }
-
 
 @Composable
 fun SettingItem(
     @DrawableRes icon: Int,
     title: String,
-    subTitle: String = "",
+    subTitle: String? = "",
     isSwitchUi: Boolean = false,
     isSwitchUiChecked: Boolean = false,
     onSwitch: ((Boolean) -> Unit)? = null,
@@ -149,7 +173,7 @@ fun SettingItem(
                     contentDescription = null,
                     modifier = Modifier
                         .clip(shape = CircleShape)
-                        .size(40.dp)
+                        .size(32.dp)
                 )
             }
 
@@ -165,7 +189,7 @@ fun SettingItem(
 
             }
             Text(
-                text = subTitle,
+                text = subTitle ?: "",
                 fontWeight = MaterialTheme.typography.bodyLarge.fontWeight,
                 fontSize = MaterialTheme.typography.bodyLarge.fontSize,
                 modifier = Modifier.padding(horizontal = 10.dp),
@@ -196,3 +220,5 @@ fun DefaultBox(iconSize: Int) {
         )
     }
 }
+
+
