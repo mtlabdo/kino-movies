@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -8,8 +10,17 @@ plugins {
 
 }
 
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.inputStream())
+}
+
+val apiKey: String = localProperties.getProperty("API_KEY") ?: "####NO_API_KEY####"
+
 
 android {
+
     namespace = "com.kino.movies"
     compileSdk = 34
 
@@ -22,11 +33,12 @@ android {
        // resourceConfigurations += arrayOf("en", "fr", "hi", "ar", "es","it")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    defaultConfig {
+        buildConfigField("String", "API_KEY", "\"$apiKey\"")
+    }
 
     buildTypes {
         debug {
-            buildConfigField("String", "API_KEY", "${project.property("API_KEY")}")
         }
         release {
             isMinifyEnabled = false
@@ -34,7 +46,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "API_KEY", "${project.property("API_KEY")}")
         }
     }
     compileOptions {

@@ -1,5 +1,6 @@
 package com.kino.movies.data.network.ktor
 
+import com.kino.movies.BuildConfig
 import com.kino.movies.data.network.BASE_URL
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
@@ -24,7 +25,7 @@ object KtorHttpClient {
 
                 header(
                     "Authorization",
-                    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZjA5OTVmMzM4MTYxN2FhNDA1Y2UxYzE1MzQ4ZmZjMCIsIm5iZiI6MTczMjE0MjkzMi4zODAyMTMzLCJzdWIiOiI1YzcwMGJjNGMzYTM2ODVhMmVkNTNhZjUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.NcRvPrP9BHO8ZlLX3m3S_h_e5ysqjKGXdjSg8FbgY30"
+                    "Bearer ${BuildConfig.API_KEY}"
                 )
             }
         }
