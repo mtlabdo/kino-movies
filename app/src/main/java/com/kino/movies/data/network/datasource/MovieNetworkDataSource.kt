@@ -4,6 +4,8 @@ import com.kino.movies.R
 import com.kino.movies.data.network.DISCOVER_MOVIE_API
 import com.kino.movies.data.network.dto.ApiResponse
 import com.kino.movies.data.network.dto.MovieDto
+import com.kino.movies.data.network.utils.isClientError
+import com.kino.movies.data.network.utils.isServerError
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -11,6 +13,7 @@ import io.ktor.client.statement.HttpResponse
 import java.io.IOException
 import com.kino.movies.domain.Result
 import com.kino.movies.presentation.utils.UIText
+import io.ktor.http.isSuccess
 
 class MovieNetworkDataSource(private val httpClient: HttpClient) {
 
@@ -18,20 +21,20 @@ class MovieNetworkDataSource(private val httpClient: HttpClient) {
         return try {
             val response: HttpResponse = httpClient.get(DISCOVER_MOVIE_API)
 
-            when (response.status.value) {
-                in 200..299 -> {
+            when {
+                response.status.isSuccess() -> {
                     val moviesNetwork: ApiResponse<MovieDto> = response.body()
                     Result.Success(moviesNetwork.results)
                 }
 
-                in 400..499 -> {
+                response.status.isClientError() -> {
                     Result.Error(
                         code = response.status.value,
                         message = UIText.StringResource(R.string.error_client)
                     )
                 }
 
-                in 500..599 -> {
+                response.status.isServerError() -> {
                     Result.Error(
                         code = response.status.value,
                         message = UIText.StringResource(R.string.error_server)
@@ -46,9 +49,9 @@ class MovieNetworkDataSource(private val httpClient: HttpClient) {
                 }
             }
         } catch (e: IOException) {
-            Result.Error(message = UIText.StringResource(R.string.error_network))
+            Result.Error(message = UIText.StringResource(R.string.error_network), exception = e)
         } catch (e: Exception) {
-            Result.Error(message = UIText.StringResource(R.string.error_unknown))
+            Result.Error(message = UIText.StringResource(R.string.error_unknown), exception = e)
         }
     }
 }

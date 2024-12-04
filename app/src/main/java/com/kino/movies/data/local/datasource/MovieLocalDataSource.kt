@@ -1,5 +1,6 @@
 package com.kino.movies.data.local.datasource
 
+import android.database.SQLException
 import com.kino.movies.R
 import com.kino.movies.data.local.dao.MovieDao
 import com.kino.movies.data.local.entity.MovieEntity
@@ -27,7 +28,7 @@ class MovieLocalDataSource(
             }
             Result.Success(Unit)
         } catch (e: Exception) {
-            Result.Error(message = UIText.StringResource(R.string.error_save_movies))
+            Result.Error(message = UIText.StringResource(R.string.error_save_movies), exception = e)
         }
     }
 
@@ -36,7 +37,7 @@ class MovieLocalDataSource(
             movieDao.deleteMovie(movie)
             Result.Success(Unit)
         } catch (e: Exception) {
-            Result.Error(message = UIText.StringResource(R.string.error_delete_movie))
+            Result.Error(message = UIText.StringResource(R.string.error_delete_movie), exception = e)
         }
     }
 
@@ -50,7 +51,7 @@ class MovieLocalDataSource(
             movieDao.setMovieFavorite(movieId)
             Result.Success(Unit)
         } catch (e: Exception) {
-            Result.Error(message = UIText.StringResource(R.string.error_add_fav_movie))
+            Result.Error(message = UIText.StringResource(R.string.error_add_fav_movie), exception = e)
         }
     }
 
@@ -58,8 +59,8 @@ class MovieLocalDataSource(
         try {
             movieDao.removeMovieFavorite(movieId)
             Result.Success(Unit)
-        } catch (e: Exception) {
-            Result.Error(message = UIText.StringResource(R.string.error_delete_movie))
+        } catch (e: SQLException) {
+            Result.Error(message = UIText.StringResource(R.string.error_delete_movie), exception = e)
         }
     }
 }

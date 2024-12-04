@@ -2,7 +2,6 @@ package com.kino.movies.presentation.navigation.node
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -17,8 +16,7 @@ import org.koin.androidx.compose.koinViewModel
 
 
 fun NavGraphBuilder.detailNode(
-    navController: NavHostController,
-    modifier: Modifier
+    navController: NavHostController
 ) {
     composable(Screen.Detail.route, arguments = listOf(navArgument(DETAIL_MOVIE_ARGUMENT_KEY) {
         type = NavType.StringType

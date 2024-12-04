@@ -33,6 +33,4 @@ interface MovieDao {
 
     @Query("SELECT * FROM movie WHERE favorite = 1")
     fun getFavoriteMovies(): Flow<List<MovieEntity>>
-
-
 }

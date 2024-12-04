@@ -103,7 +103,7 @@ fun MovieDetail(movieDetail: Movie, onUpdateFavorite: (newFavoriteState) -> Unit
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(movieDetail.imageUrl)
-                .size(400)
+                .size(MOVIE_IMAGE_SIZE)
                 .crossfade(true)
                 .build(),
             placeholder = painterResource(R.drawable.placeholder_movie),
@@ -113,7 +113,7 @@ fun MovieDetail(movieDetail: Movie, onUpdateFavorite: (newFavoriteState) -> Unit
             modifier = Modifier
                 .clip(MaterialTheme.shapes.medium)
                 .align(Alignment.CenterHorizontally)
-                .height((screenHeight * 0.60).dp)
+                .height((screenHeight * MOVIE_IMAGE_HEIGHT_FRACTION).dp)
         )
         Spacer(modifier = Modifier.height(12.dp))
         Row(
@@ -124,7 +124,7 @@ fun MovieDetail(movieDetail: Movie, onUpdateFavorite: (newFavoriteState) -> Unit
                 text = movieDetail.title ?: stringResource(R.string.no_title),
                 maxLines = 2,
                 style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.weight(5f)
+                modifier = Modifier.weight(MOVIE_TITLE_WEIGHT)
             )
 
             Button(
@@ -216,3 +216,6 @@ fun CardLabel(text: String, icon: ImageVector? = null) {
 }
 
 typealias newFavoriteState = Boolean
+private const val MOVIE_IMAGE_SIZE = 400
+private const val MOVIE_IMAGE_HEIGHT_FRACTION = 0.60
+private const val MOVIE_TITLE_WEIGHT = 5f

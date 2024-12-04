@@ -28,7 +28,10 @@ fun MovieDto.toMovieEntity() = MovieEntity(
     imageUrl = if (posterPath.isNullOrEmpty()) null else "$IMAGE_BASE_URL$posterPath",
     genre = genreIds.joinToString(", "),
     thumbnailUrl = posterPath ?: "",
-    rating = voteAverage.format(1),
-    year = releaseDate.take(4),
+    rating = voteAverage.format(RATING_DECIMAL_PLACES),
+    year = releaseDate.take(RELEASE_YEAR_LENGTH),
     favorite = false
 )
+
+const val RELEASE_YEAR_LENGTH = 4
+const val RATING_DECIMAL_PLACES = 1

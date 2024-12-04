@@ -54,6 +54,7 @@ fun MainScreen(
         }
     }
 
+
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -77,7 +78,6 @@ fun MainScreen(
         }
 
     }
-
     Scaffold(
         snackbarHost = {
             SnackbarHost(

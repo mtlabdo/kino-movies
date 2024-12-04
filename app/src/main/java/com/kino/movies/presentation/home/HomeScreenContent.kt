@@ -111,7 +111,7 @@ fun MovieItem(movie: Movie, onItemClick: (String) -> Unit) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(movie.imageUrl)
-                .size(92)
+                .size(MOVIE_THUMBNAIL_SIZE)
                 .diskCacheKey(movie.imageUrl)
                 .crossfade(false)
                 .build(),
@@ -136,3 +136,4 @@ fun MovieItem(movie: Movie, onItemClick: (String) -> Unit) {
 }
 
 
+private const val MOVIE_THUMBNAIL_SIZE = 92

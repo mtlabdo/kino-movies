@@ -20,5 +20,4 @@ class KinoApplication : Application() {
             modules(appDI + dataDI + domainDI + presentationDI)
         }
     }
-
 }

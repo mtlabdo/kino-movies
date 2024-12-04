@@ -16,7 +16,6 @@ import com.kino.movies.domain.model.AppTheme
 import com.kino.movies.domain.usecase.apptheme.GetAppThemeUseCase
 import com.kino.movies.presentation.designsystem.theme.KinomoviesTheme
 import com.kino.movies.presentation.MainScreen
-import com.kino.movies.presentation.setting.Language
 import com.kino.movies.presentation.utils.ObserveAsEvents
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject

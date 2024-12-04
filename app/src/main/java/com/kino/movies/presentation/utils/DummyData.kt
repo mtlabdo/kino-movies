@@ -6,7 +6,8 @@ val dummyFilms = listOf(
     Movie(
         id = "1",
         title = "The Shawkshank Redemption",
-        description = "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+        description = "Two imprisoned men bond over a number of years, finding solace and eventual " +
+                "redemption through acts of common decency.",
         rank = 1,
         imageUrl = "https://example.com/shawkshank.jpg",
         genre = "Drama",
@@ -20,7 +21,8 @@ val dummyFilms = listOf(
     Movie(
         id = "2",
         title = "The Godfather",
-        description = "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+        description = "The aging patriarch of an organized crime dynasty transfers control " +
+                "of his clandestine empire to his reluctant son.",
         rank = 2,
         imageUrl = "https://example.com/godfather.jpg",
         genre = "Crime, Drama",
@@ -34,7 +36,9 @@ val dummyFilms = listOf(
     Movie(
         id = "3",
         title = "The Dark Knight",
-        description = "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+        description = "When the menace known as the Joker wreaks havoc and chaos on the people " +
+                "of Gotham, Batman must accept one of the greatest psychological and physical" +
+                " tests of his ability to fight injustice.",
         rank = 3,
         imageUrl = "https://fr.web.img4.acsta.net/img/d2/08/d20884027242cf2736b1117b6e88a3df.jpg",
         genre = "Action, Crime, Drama",
@@ -49,7 +53,8 @@ val dummyFilms = listOf(
     Movie(
         id = "4",
         title = "The Shawkshank Redemption",
-        description = "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+        description = "Two imprisoned men bond over a number of years, finding solace " +
+                "and eventual redemption through acts of common decency.",
         rank = 1,
         imageUrl = "https://example.com/shawkshank.jpg",
         genre = "Drama",
@@ -63,7 +68,8 @@ val dummyFilms = listOf(
     Movie(
         id = "5",
         title = "The Godfather",
-        description = "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+        description = "The aging patriarch of an organized crime dynasty transfers " +
+                "control of his clandestine empire to his reluctant son.",
         rank = 2,
         imageUrl = "https://example.com/godfather.jpg",
         genre = "Crime, Drama",
@@ -77,7 +83,9 @@ val dummyFilms = listOf(
     Movie(
         id = "6",
         title = "The Dark Knight",
-        description = "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+        description = "When the menace known as the Joker wreaks havoc and chaos on the people " +
+                "of Gotham, Batman must accept one of the greatest psychological and physical " +
+                "tests of his ability to fight injustice.",
         rank = 3,
         imageUrl = "https://fr.web.img4.acsta.net/img/d2/08/d20884027242cf2736b1117b6e88a3df.jpg",
         genre = "Action, Crime, Drama",

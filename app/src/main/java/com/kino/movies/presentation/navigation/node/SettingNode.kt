@@ -5,7 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.kino.movies.presentation.navigation.navHost.Screen
 import com.kino.movies.presentation.setting.SettingScreen
@@ -13,7 +12,6 @@ import com.kino.movies.presentation.setting.SettingViewModel
 import org.koin.androidx.compose.koinViewModel
 
 fun NavGraphBuilder.settingNode(
-    navController: NavHostController,
     modifier: Modifier
 ) {
     composable(

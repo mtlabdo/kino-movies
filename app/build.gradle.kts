@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import java.util.Properties
 
 plugins {
@@ -7,7 +8,14 @@ plugins {
     kotlin("plugin.serialization") version libs.versions.kotlin
     alias(libs.plugins.room)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.detekt)
+}
 
+tasks.configureEach {
+    if (name == "compileDebugKotlin") {
+        dependsOn(tasks.detekt)
+        mustRunAfter(tasks.detekt)
+    }
 }
 
 val localProperties = Properties()

@@ -1,4 +1,4 @@
-package com.kino.movies.presentation.designsystem.component
+package com.kino.movies.presentation.designsystem.component.kinoSwitch
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.animateContentSize
@@ -30,27 +30,19 @@ import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.kino.movies.R
 import com.kino.movies.presentation.designsystem.composable.SpacerHorizontal16
 import com.kino.movies.presentation.designsystem.composable.SpacerVertical16
 
+val defaultSwitchParams = KinoSwitchBuilder().build()
+const val SWITCH_ANIMATION_DURATION = 500
+
 @Composable
 fun CustomSwitch(
-    width: Dp = 45.dp,
-    height: Dp = 30.dp,
-    checkedTrackColor: Color = Color(0xFF35898F),
-    uncheckedTrackColor: Color = MaterialTheme.colorScheme.outline,
-    gapBetweenThumbAndTrackEdge: Dp = 4.dp,
-    borderWidth: Dp = 2.dp,
-    cornerSize: Int = 50,
-    iconInnerPadding: Dp = 4.dp,
-    thumbSize: Dp = 20.dp,
+    switchParams: KinoSwitchParams = defaultSwitchParams,
     switchOn: Boolean,
     onSwitch: ((Boolean) -> Unit)? = null
 ) {
-
     val interactionSource = remember {
         MutableInteractionSource()
     }
@@ -61,7 +53,7 @@ fun CustomSwitch(
         modifier = Modifier
 
             .animateContentSize(
-                animationSpec = tween(500)
+                animationSpec = tween(SWITCH_ANIMATION_DURATION)
             ), contentAlignment = alignment
     ) {
         Text(
@@ -74,11 +66,11 @@ fun CustomSwitch(
     SpacerHorizontal16()
     Box(
         modifier = Modifier
-            .size(width = width, height = height)
+            .size(width = switchParams.width, height = switchParams.height)
             .border(
-                width = borderWidth,
-                color = if (switchOn) checkedTrackColor else uncheckedTrackColor,
-                shape = RoundedCornerShape(percent = cornerSize)
+                width = switchParams.borderWidth,
+                color = if (switchOn) switchParams.checkedTrackColor else switchParams.uncheckedTrackColor,
+                shape = RoundedCornerShape(percent = switchParams.cornerSize)
             )
             .clickable(
                 indication = null,
@@ -92,8 +84,8 @@ fun CustomSwitch(
         Box(
             modifier = Modifier
                 .padding(
-                    start = gapBetweenThumbAndTrackEdge,
-                    end = gapBetweenThumbAndTrackEdge
+                    start = switchParams.gapBetweenThumbAndTrackEdge,
+                    end = switchParams.gapBetweenThumbAndTrackEdge
                 )
                 .fillMaxSize(),
             contentAlignment = alignment
@@ -102,12 +94,12 @@ fun CustomSwitch(
                 imageVector = if (switchOn) Icons.Filled.Done else Icons.Filled.Close,
                 contentDescription = if (switchOn) "Enabled" else "Disabled",
                 modifier = Modifier
-                    .size(size = thumbSize)
+                    .size(size = switchParams.thumbSize)
                     .background(
-                        color = if (switchOn) checkedTrackColor else uncheckedTrackColor,
+                        color = if (switchOn) switchParams.checkedTrackColor else switchParams.uncheckedTrackColor,
                         shape = CircleShape
                     )
-                    .padding(all = iconInnerPadding),
+                    .padding(all = switchParams.iconInnerPadding),
                 tint = Color.White
             )
         }
